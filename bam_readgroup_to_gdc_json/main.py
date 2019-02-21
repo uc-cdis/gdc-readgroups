@@ -8,6 +8,10 @@ import re
 import sys
 
 import pysam
+from gdcdictionary import gdcdictionary
+from dictionaryutils import dictionary
+
+dictionary.init(gdcdictionary)
 
 def check_readgroup(readgroup_dict, logger):
     if not 'CN' in readgroup_dict:
@@ -125,7 +129,7 @@ def extract_readgroup_json(bam_path, logger):
             readgroup_meta['library_preparation_kit_name'] = 'OPTIONAL<string>'
             readgroup_meta['library_preparation_kit_vendor'] = 'OPTIONAL<string>'
             readgroup_meta['library_preparation_kit_version'] = 'OPTIONAL<string>'
-            readgroup_meta['library_strand'] = 'OPTIONAL<enumeratio>'
+            readgroup_meta['library_strand'] = 'OPTIONAL<enumeration>'
             readgroup_meta['size_selection_range'] = 'OPTIONAL<string>'
             readgroup_meta['spike_ins_concentration'] = 'OPTIONAL<string>'
             readgroup_meta['spike_ins_fasta'] = 'OPTIONAL<string>'
