@@ -8,10 +8,10 @@ import re
 import sys
 
 import pysam
-from gdcdictionary import gdcdictionary
-from dictionaryutils import dictionary
+# from gdcdictionary import gdcdictionary
+# from dictionaryutils import dictionary
 
-dictionary.init(gdcdictionary)
+# dictionary.init(gdcdictionary)
 
 def check_readgroup(readgroup_dict, logger):
     if not 'CN' in readgroup_dict:
