@@ -85,7 +85,7 @@ def extract_readgroup_json(bam_path, logger):
             readgroup_meta['read_group_name'] = bam_readgroup_dict.get('ID', 'REQUIRED<string>')
             readgroup_meta['sequencing_center'] = bam_readgroup_dict.get('CN', 'REQUIRED<string>')
             if readgroup_meta['aliquots']['submitter_id'] != 'REQUIRED<string>':
-                readgroup_meta['submitter_id'] = readgroup_meta['aliquots']['submitter_id']+'_'+readgroup_meta['read_group_name']
+                readgroup_meta['submitter_id'] = bam_readgroup_dict['SM'] + '_' + bam_readgroup_dict['ID']
             else:
                 readgroup_meta['submitter_id'] = 'REQUIRED<string>'
             readgroup_meta['experiment_name'] = 'REQUIRED<string>'
