@@ -107,7 +107,7 @@ def extract_readgroup_json(bam_path, logger):
             readgroup_meta['days_to_sequencing'] = 'OPTIONAL<integer>'
             readgroup_meta['fragment_maximum_length'] = 'OPTIONAL<integer>'
             readgroup_meta['fragment_mean_length'] = 'OPTIONAL<number>'
-            readgroup_meta['fragment_minimum_length'] = 'OPTIONAL<minimum>'
+            readgroup_meta['fragment_minimum_length'] = 'OPTIONAL<integer>'
             readgroup_meta['fragment_standard_deviation_length'] = 'OPTIONAL<number>'
             readgroup_meta['includes_spike_ins'] = 'OPTIONAL<boolean>'
             readgroup_meta['library_preparation_kit_catalog_number'] = 'OPTIONAL<string>'
