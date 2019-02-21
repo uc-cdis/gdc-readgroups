@@ -85,6 +85,11 @@ def extract_readgroup_json(bam_path, logger):
             readgroup_meta['read_length'] = 'REQUIRED<integer,null>'
             readgroup_meta['target_capture_kit'] = 'REQUIRED<enumeration>'
 
+            # possible use
+            barcode_sequence = bam_readgroup_dict.get('BC', None) # CHECK_MATCH with multiplex_barcode, if present, below
+            description = bam_readgroup_dict.get('DS', None) # experiment?
+
+            predicted_median_insert_size = bam_readgroup_dict.get('PI', None)
             readgroup_meta['instrument_model'] = bam_readgroup_dict.get('PM', 'OPTIONAL<enumeration>')
             readgroup_meta['sequencing_date'] = bam_readgroup_dict.get('DT', 'OPTIONAL<ISO8601 date or date/time, null>')
 
@@ -94,6 +99,12 @@ def extract_readgroup_json(bam_path, logger):
                 readgroup_meta['flow_cell_barcode'] = pu_dict.get('FB', 'OPTIONAL<string>')
                 readgroup_meta['lane_number'] = pu_dict.get('LN', 'OPTIONAL<integer>')
                 readgroup_meta['multiplex_barcode'] = pu_dict.get('MB', 'OPTIONAL<string>')
+
+                #CHECK_MATCH
+                if barcode_sequence and readgroup_meta['multiplex_barcode'] != 'OPTIONAL<string>':
+                    if barcode_sequence != readgroup_meta['multiplex_barcode']:
+                        logger.info('In Read Group {0}, the BC tag ({1}) does not match the third dotted part of the PU tag ({2})'.format(
+                            readgroup_meta['read_group_name'], barcode_sequence, readgroup_meta['multiplex_barcode']))
             else:
                 readgroup_meta['flow_cell_barcode'] = 'OPTIONAL<string>'
                 readgroup_meta['lane_number'] = 'OPTIONAL<integer>'
