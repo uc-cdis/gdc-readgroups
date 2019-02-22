@@ -41,7 +41,7 @@ def resolve_platform_unit(platform_unit):
     return pu_dict
 
 def harmonize_readgroup(readgroup_dict, logger):
-    PLATFORM_ARRAY = ('illumina', 'solid', 'ls454', 'ion torrent', 'iontorrent', 'complete genomics', 'completegenomics', 'pacbio', 'pac bio', 'other')
+    PLATFORM_ARRAY = ('illumina', 'solid', 'ls454', 'ion torrent', 'iontorrent', 'complete genomics', 'completegenomics', 'pacbio', 'pac bio', 'other', 'capillary', 'helicos', 'ont')
     if not 'ID' in readgroup_dict:
         logger.error('"ID" is missing from readgroup: {}'.format(readgroup_dict))
         sys.exit(1)
@@ -73,6 +73,10 @@ def harmonize_readgroup(readgroup_dict, logger):
                 readgroup_dict['PL'] = 'PacBio'
             elif platform == 'other':
                 readgroup_dict['PL'] = 'Other'
+            elif platform in ('capillary', 'helicos', 'ont'):
+                readgroup_dict['PL'] = 'Other'
+            else:
+                sys.error('The read group {0} has an unrecognized PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
     return readgroup_dict
 
 def check_platform(platform, logger):
