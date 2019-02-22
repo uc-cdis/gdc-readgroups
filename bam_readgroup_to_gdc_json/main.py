@@ -47,7 +47,7 @@ def check_readgroup(readgroup_dict, logger):
     return
 
 def check_platform(platform, logger):
-
+    
     return
 
 def extract_readgroup_json(bam_path, logger):
@@ -61,7 +61,7 @@ def extract_readgroup_json(bam_path, logger):
     out_readgroup_dict_list = list()
     
     if len(bam_readgroup_dict_list) < 1:
-        logger.info('There are no readgroups in BAM: {}'.format(bam_name))
+        logger.error('There are no readgroups in BAM: {}'.format(bam_name))
         sys.exit(1)
     else:
         for bam_readgroup_dict in bam_readgroup_dict_list:
