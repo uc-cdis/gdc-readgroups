@@ -59,6 +59,7 @@ def extract_readgroup_json(bam_path, logger):
             readgroup_meta = dict()
             readgroup_meta['aliquots'] = dict()
             readgroup_meta['aliquots']['submitter_id'] = bam_readgroup_dict.get('SM', 'REQUIRED<string>')
+            readgroup_meta['experiment_name'] = bam_readgroup_dict.get('DS', 'REQUIRED<string>')
             readgroup_meta['library_name'] = bam_readgroup_dict.get('LB', 'REQUIRED<string>')
             readgroup_meta['platform'] = bam_readgroup_dict.get('PL', 'REQUIRED<enumeration>')
             readgroup_meta['read_group_name'] = bam_readgroup_dict.get('ID', 'REQUIRED<string>')
@@ -67,7 +68,6 @@ def extract_readgroup_json(bam_path, logger):
                 readgroup_meta['submitter_id'] = readgroup_meta['aliquots']['submitter_id']+'_'+readgroup_meta['read_group_name']
             else:
                 readgroup_meta['submitter_id'] = 'REQUIRED<string>'
-            readgroup_meta['experiment_name'] = 'REQUIRED<string>'
             readgroup_meta['is_paired_end'] = 'REQUIRED<boolean>'
             readgroup_meta['library_selection'] = 'REQUIRED<enumeration>'
             readgroup_meta['library_strategy'] = 'REQUIRED<enumeration>'
