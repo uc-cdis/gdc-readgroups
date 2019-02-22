@@ -40,6 +40,12 @@ def resolve_platform_unit(platform_unit):
                 pu_dict['LN'] = int(lane_number)
     return pu_dict
 
+def check_readgroup(readgroup_dict, logger):
+    if not 'ID' in readgroup_dict:
+        logger.error('"ID" is missing from readgroup: {}'.format(readgroup_dict))
+        sys.exit(1)
+    return
+
 def extract_readgroup_json(bam_path, logger):
     step_dir = os.getcwd()
     bam_file = os.path.basename(bam_path)
@@ -56,6 +62,7 @@ def extract_readgroup_json(bam_path, logger):
     else:
         for bam_readgroup_dict in bam_readgroup_dict_list:
             logger.debug('bam_readgroup_dict: {}'.format(bam_readgroup_dict))
+            check_readgroup(bam_readgroup_dict, logger)
             readgroup_meta = dict()
             readgroup_meta['aliquots'] = dict()
             readgroup_meta['aliquots']['submitter_id'] = bam_readgroup_dict.get('SM', 'REQUIRED<string>')
