@@ -13,24 +13,6 @@ import pysam
 
 # dictionary.init(gdcdictionary)
 
-def check_readgroup(readgroup_dict, logger):
-    if not 'CN' in readgroup_dict:
-        logger.error('"CN" is missing from readgroup: {}'.format(readgroup_dict))
-        sys.exit(1)
-    if not 'ID' in readgroup_dict:
-        logger.error('"ID" is missing from readgroup: {}'.format(readgroup_dict))
-        sys.exit(1)
-    if not 'LB' in readgroup_dict:
-        logger.error('"LB" is missing from readgroup: {}'.format(readgroup_dict))
-        sys.exit(1)
-    if not 'PL' in readgroup_dict:
-        logger.error('"PL" is missing from readgroup: {}'.format(readgroup_dict))
-        sys.exit(1)
-    if not 'SM' in readgroup_dict:
-        logger.error('"SM" is missing from readgroup: {}'.format(readgroup_dict))
-        sys.exit(1)
-    return
-
 def resolve_platform_unit(platform_unit):
     if not platform_unit:
         return None
@@ -74,7 +56,6 @@ def extract_readgroup_json(bam_path, logger):
     else:
         for bam_readgroup_dict in bam_readgroup_dict_list:
             logger.debug('bam_readgroup_dict: {}'.format(bam_readgroup_dict))
-            check_readgroup(bam_readgroup_dict, logger)
             readgroup_meta = dict()
             readgroup_meta['aliquots'] = dict()
             readgroup_meta['aliquots']['submitter_id'] = bam_readgroup_dict.get('SM', 'REQUIRED<string>')
@@ -155,7 +136,7 @@ def validate_inputs(bam_path, logger):
 
 def setup_logging(args):
     logging.basicConfig(
-        filename=os.path.join('output.log'),
+        #filename=os.path.join('output.log'),
         level=args.level,
         filemode='w',
         format='%(asctime)s %(levelname)s %(message)s',
