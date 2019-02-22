@@ -142,7 +142,7 @@ def validate_inputs(bam_path, logger):
     bam_file = os.path.basename(bam_path)
     bam_name, bam_ext = os.path.splitext(bam_file)
     if bam_ext != '.bam':
-        logger.info("This program only runs on BAM files, which must have the file suffix '.bam'")
+        logger.error("This program only runs on BAM files, which must have the file suffix '.bam'")
         sys.exit(1)
     return
 
