@@ -40,11 +40,40 @@ def resolve_platform_unit(platform_unit):
                 pu_dict['LN'] = int(lane_number)
     return pu_dict
 
-def check_readgroup(readgroup_dict, logger):
+def harmonize_readgroup(readgroup_dict, logger):
+    PLATFORM_ARRAY = ('illumina', 'solid', 'ls454', 'ion torrent', 'iontorrent', 'complete genomics', 'completegenomics', 'pacbio', 'pac bio', 'other')
     if not 'ID' in readgroup_dict:
         logger.error('"ID" is missing from readgroup: {}'.format(readgroup_dict))
         sys.exit(1)
-    return
+    if 'PL' in readgroup_dict:
+        platform = readgroup_dict['PL'].lower()
+        if platform not in PLATFORM_ARRAY:
+            logger.error('The read group {0} is an invalid PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
+            logger.error('Accepted values include: '
+                         + '\t Illumina'
+                         + '\t SOLiD'
+                         + '\t LS454'
+                         + '\t Ion Torrent'
+                         + '\t Complete Genomics'
+                         + '\t PacBio'
+                         + '\t Other')
+            sys.exit(1)
+        else:
+            if platform == 'illumina':
+                readgroup_dict['PL'] = 'Illumina'
+            elif platform == 'solid':
+                readgroup_dict['PL'] = 'SOLiD'
+            elif platform == 'ls454':
+                readgroup_dict['PL'] = 'LS454'
+            elif platform in ('ion torrent', 'iontorrent'):
+                readgroup_dict['PL'] = 'Ion Torrent'
+            elif platform in ('complete genomics', 'completegenomics'):
+                readgroup_dict['PL'] = 'Complete Genomics'
+            elif platform in ('pac bio', 'pacbio'):
+                readgroup_dict['PL'] = 'PacBio'
+            elif platform == 'other':
+                readgroup_dict['PL'] = 'Other'
+    return readgroup_dict
 
 def check_platform(platform, logger):
     
@@ -66,14 +95,13 @@ def extract_readgroup_json(bam_path, logger):
     else:
         for bam_readgroup_dict in bam_readgroup_dict_list:
             logger.debug('bam_readgroup_dict: {}'.format(bam_readgroup_dict))
-            check_readgroup(bam_readgroup_dict, logger)
+            harmonize_readgroup(bam_readgroup_dict, logger)
             readgroup_meta = dict()
             readgroup_meta['aliquots'] = dict()
             readgroup_meta['aliquots']['submitter_id'] = bam_readgroup_dict.get('SM', 'REQUIRED<string>')
             readgroup_meta['experiment_name'] = bam_readgroup_dict.get('DS', 'REQUIRED<string>')
             readgroup_meta['library_name'] = bam_readgroup_dict.get('LB', 'REQUIRED<string>')
             readgroup_meta['platform'] = bam_readgroup_dict.get('PL', 'REQUIRED<enumeration>')
-            check_platform(readgroup_meta['platform'], logger)
             readgroup_meta['read_group_name'] = bam_readgroup_dict.get('ID', 'REQUIRED<string>')
             readgroup_meta['sequencing_center'] = bam_readgroup_dict.get('CN', 'REQUIRED<string>')
             if readgroup_meta['aliquots']['submitter_id'] != 'REQUIRED<string>':
