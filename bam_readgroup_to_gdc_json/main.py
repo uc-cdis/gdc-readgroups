@@ -46,6 +46,10 @@ def check_readgroup(readgroup_dict, logger):
         sys.exit(1)
     return
 
+def check_platform(platform, logger):
+
+    return
+
 def extract_readgroup_json(bam_path, logger):
     step_dir = os.getcwd()
     bam_file = os.path.basename(bam_path)
@@ -69,6 +73,7 @@ def extract_readgroup_json(bam_path, logger):
             readgroup_meta['experiment_name'] = bam_readgroup_dict.get('DS', 'REQUIRED<string>')
             readgroup_meta['library_name'] = bam_readgroup_dict.get('LB', 'REQUIRED<string>')
             readgroup_meta['platform'] = bam_readgroup_dict.get('PL', 'REQUIRED<enumeration>')
+            check_platform(readgroup_meta['platform'], logger)
             readgroup_meta['read_group_name'] = bam_readgroup_dict.get('ID', 'REQUIRED<string>')
             readgroup_meta['sequencing_center'] = bam_readgroup_dict.get('CN', 'REQUIRED<string>')
             if readgroup_meta['aliquots']['submitter_id'] != 'REQUIRED<string>':
