@@ -15,19 +15,19 @@ import pysam
 
 def check_readgroup(readgroup_dict, logger):
     if not 'CN' in readgroup_dict:
-        logger.info('"CN" is missing from readgroup: {}'.format(readgroup_dict))
+        logger.error('"CN" is missing from readgroup: {}'.format(readgroup_dict))
         sys.exit(1)
     if not 'ID' in readgroup_dict:
-        logger.info('"ID" is missing from readgroup: {}'.format(readgroup_dict))
+        logger.error('"ID" is missing from readgroup: {}'.format(readgroup_dict))
         sys.exit(1)
     if not 'LB' in readgroup_dict:
-        logger.info('"LB" is missing from readgroup: {}'.format(readgroup_dict))
+        logger.error('"LB" is missing from readgroup: {}'.format(readgroup_dict))
         sys.exit(1)
     if not 'PL' in readgroup_dict:
-        logger.info('"PL" is missing from readgroup: {}'.format(readgroup_dict))
+        logger.error('"PL" is missing from readgroup: {}'.format(readgroup_dict))
         sys.exit(1)
     if not 'SM' in readgroup_dict:
-        logger.info('"SM" is missing from readgroup: {}'.format(readgroup_dict))
+        logger.error('"SM" is missing from readgroup: {}'.format(readgroup_dict))
         sys.exit(1)
     return
 
@@ -138,6 +138,7 @@ def extract_readgroup_json(bam_path, logger):
             readgroup_meta['spike_ins_concentration'] = 'OPTIONAL<string>'
             readgroup_meta['spike_ins_fasta'] = 'OPTIONAL<string>'
             readgroup_meta['to_trim_adapter_sequence'] = 'OPTIONAL<boolean>'
+            readgroup_meta['type'] = 'read_group'
             out_readgroup_dict_list.append(readgroup_meta)
 
     with open(readgroups_json_file, 'w') as f:
