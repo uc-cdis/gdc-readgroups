@@ -8,10 +8,6 @@ import re
 import sys
 
 import pysam
-# from gdcdictionary import gdcdictionary
-# from dictionaryutils import dictionary
-
-# dictionary.init(gdcdictionary)
 
 def resolve_platform_unit(platform_unit):
     if not platform_unit:
