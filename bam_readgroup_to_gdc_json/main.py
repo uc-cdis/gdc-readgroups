@@ -47,9 +47,25 @@ def harmonize_readgroup(readgroup_dict, logger):
         sys.exit(1)
     if 'PL' in readgroup_dict:
         platform = readgroup_dict['PL'].lower()
-        if platform not in PLATFORM_ARRAY:
-            logger.error('The read group {0} is an invalid PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
-            logger.error('Accepted values include: '
+        if platform == 'illumina':
+            readgroup_dict['PL'] = 'Illumina'
+        elif platform == 'solid':
+            readgroup_dict['PL'] = 'SOLiD'
+        elif platform == 'ls454':
+            readgroup_dict['PL'] = 'LS454'
+        elif platform in ('ion torrent', 'iontorrent'):
+            readgroup_dict['PL'] = 'Ion Torrent'
+        elif platform in ('complete genomics', 'completegenomics'):
+            readgroup_dict['PL'] = 'Complete Genomics'
+        elif platform in ('pac bio', 'pacbio'):
+            readgroup_dict['PL'] = 'PacBio'
+        elif platform == 'other':
+            readgroup_dict['PL'] = 'Other'
+        elif platform in ('capillary', 'helicos', 'ont'):
+            readgroup_dict['PL'] = 'Other'
+        else:
+            logger.error('The read group {0} has an unrecognized PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
+            logger.error('Accepted values include:'
                          + '\t Illumina'
                          + '\t SOLiD'
                          + '\t LS454'
@@ -58,25 +74,63 @@ def harmonize_readgroup(readgroup_dict, logger):
                          + '\t PacBio'
                          + '\t Other')
             sys.exit(1)
+    if 'PM' in readgroup_dict:
+        pm = readgroup_dict['PM'].lower().strip().replace(' ','').replace('-','').replace('_','').replace('.','').replace(',','')
+        if '454' and ('gs' or 'flx' or 'titanium') in pm:
+            readgroup_dict['PM'] = '454 GS FLX Titanium'
+        elif 'solid' and '2' in pm:
+            readgroup_dict['PM'] = 'AB SOLiD 2'
+        elif 'solid' and '3' in pm:
+            readgroup_dict['PM'] = 'AB SOLiD 3'
+        elif 'solid' and '4' in pm:
+            readgroup_dict['PM'] = 'AB SOLiD 4'
+        elif 'complete' and 'genomics' in pm:
+            readgroup_dict['PM'] = 'Complete Genomics'
+        elif 'illumina' and 'hiseq' and 'x' and ('10' or 'ten') in pm:
+            readgroup_dict['PM'] = 'Illumina HiSeq X Ten'
+        elif 'illumina' and 'hiseq' and 'x' and ('5' or 'five') in pm:
+            readgroup_dict['PM'] = 'Illumina HiSeq X Five'
+        elif 'illumina' and 'iix' in pm:
+            readgroup_dict['PM'] = 'Illumina Genome Analyzer IIx'
+        elif 'illumina' and 'ii' in pm:
+            readgroup_dict['PM'] = 'Illumina Genome Analyzer II'
+        elif 'illumina' and '2000' in pm:
+            readgroup_dict['PM'] = 'Illumina HiSeq 2000'
+        elif 'illumina' and '2500' in pm:
+            readgroup_dict['PM'] = 'Illumina HiSeq 2500'
+        elif 'illumina' and '4000' in pm:
+            readgroup_dict['PM'] = 'Illumina HiSeq 4000'
+        elif 'illumina' and 'miseq' in pm:
+            readgroup_dict['PM'] = 'Illumina MiSeq'
+        elif 'ion' and 'torrent' and 'pgm 'in pm:
+            readgroup_dict['PM'] = 'Ion Torrent PGM'
+        elif 'ion' and 'torrent' and 'proton' in pm:
+            readgroup_dict['PM'] = 'Ion Torrent Proton'
+        elif 'pacbio' in pm:
+            readgroup_dict['PM'] = 'PacBio RS'
         else:
-            if platform == 'illumina':
-                readgroup_dict['PL'] = 'Illumina'
-            elif platform == 'solid':
-                readgroup_dict['PL'] = 'SOLiD'
-            elif platform == 'ls454':
-                readgroup_dict['PL'] = 'LS454'
-            elif platform in ('ion torrent', 'iontorrent'):
-                readgroup_dict['PL'] = 'Ion Torrent'
-            elif platform in ('complete genomics', 'completegenomics'):
-                readgroup_dict['PL'] = 'Complete Genomics'
-            elif platform in ('pac bio', 'pacbio'):
-                readgroup_dict['PL'] = 'PacBio'
-            elif platform == 'other':
-                readgroup_dict['PL'] = 'Other'
-            elif platform in ('capillary', 'helicos', 'ont'):
-                readgroup_dict['PL'] = 'Other'
-            else:
-                sys.error('The read group {0} has an unrecognized PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
+            logger.error('The read group {0} has an unrecognized PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
+            logger.error('Accepted values include:'
+                         + '\t 454 GS FLX Titanium'
+                         + '\t AB SOLiD 2'
+                         + '\t AB SOLiD 3'
+                         + '\t AB SOLiD 4'
+                         + '\t Complete Genomics'
+                         + '\t Illumina HiSeq X Ten'
+                         + '\t Illumina HiSeq X Five'
+                         + '\t Illumina Genome Analyzer II'
+                         + '\t Illumina Genome Analyzer IIx'
+                         + '\t Illumina HiSeq 2000'
+                         + '\t Illumina HiSeq 2500'
+                         + '\t Illumina HiSeq 4000'
+                         + '\t Illumina MiSeq'
+                         + '\t Illumina NextSeq'
+                         + '\t Ion Torrent PGM'
+                         + '\t Ion Torrent Proton'
+                         + '\t PacBio RS'
+                         + '\t Other')
+            sys.exit(1)
+
     return readgroup_dict
 
 def check_platform(platform, logger):
@@ -206,10 +260,6 @@ def main():
                         required = True,
                         help = 'BAM file.'
     )
-    # parser.add_argument('-d', '--detailed_id_verify',
-    #                     required = False,
-    #                     help = 'Checks that each sequenced readgroup ID is represented in the header. Much slower.'
-    # )
     
 
     args = parser.parse_args()
