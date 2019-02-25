@@ -36,97 +36,109 @@ def resolve_platform_unit(platform_unit):
                 pu_dict['LN'] = int(lane_number)
     return pu_dict
 
+def get_platform(readgroup_dict):
+    if not 'PL' in readgroup_dict:
+        return None
+    pl = readgroup_dict['PL'].lower()
+    if 'illumina' in pl:
+        platform = 'Illumina'
+    elif 'solid' in pl:
+        platform = 'SOLiD'
+    elif '454' in pl:
+        platform = 'LS454'
+    elif 'ion' and  'torrent' in pl:
+        platform = 'Ion Torrent'
+    elif 'complete' and 'genomics' pl:
+        platform = 'Complete Genomics'
+    elif 'pac' and 'bio' in pl:
+        platform = 'PacBio'
+    elif 'other' in pl:
+        platform = 'Other'
+    elif platform in ('capillary', 'helicos', 'ont'): #in the SAM specification
+        platform = 'Other'
+    else:
+        logger.error('The read group {0} has an unrecognized PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
+        logger.error('Accepted values include:'
+                     + '\t Illumina'
+                     + '\t SOLiD'
+                     + '\t LS454'
+                     + '\t Ion Torrent'
+                     + '\t Complete Genomics'
+                     + '\t PacBio'
+                     + '\t Other')
+        sys.exit(1)
+    return platform
+    
+def get_platform_mode(readgroup_dict):
+    if not 'PM' in readgroup_dict:
+        return None
+    pm = readgroup_dict['PM'].lower().strip().replace(' ','').replace('-','').replace('_','').replace('.','').replace(',','')
+    if '454' and ('gs' or 'flx' or 'titanium') in pm:
+        platform_model = '454 GS FLX Titanium'
+    elif 'solid' and '2' in pm:
+        platform_model = 'AB SOLiD 2'
+    elif 'solid' and '3' in pm:
+        platform_model = 'AB SOLiD 3'
+    elif 'solid' and '4' in pm:
+        platform_model = 'AB SOLiD 4'
+    elif 'complete' and 'genomics' in pm:
+        platform_model = 'Complete Genomics'
+    elif 'illumina' and 'hiseq' and 'x' and ('10' or 'ten') in pm:
+        platform_model = 'Illumina HiSeq X Ten'
+    elif 'illumina' and 'hiseq' and 'x' and ('5' or 'five') in pm:
+        platform_model = 'Illumina HiSeq X Five'
+    elif 'illumina' and 'iix' in pm:
+        platform_model = 'Illumina Genome Analyzer IIx'
+    elif 'illumina' and 'ii' in pm:
+        platform_model = 'Illumina Genome Analyzer II'
+    elif 'illumina' and '2000' in pm:
+        platform_model = 'Illumina HiSeq 2000'
+    elif 'illumina' and '2500' in pm:
+        platform_model = 'Illumina HiSeq 2500'
+    elif 'illumina' and '4000' in pm:
+        platform_model = 'Illumina HiSeq 4000'
+    elif 'illumina' and 'miseq' in pm:
+        platform_model = 'Illumina MiSeq'
+    elif 'ion' and 'torrent' and 'pgm 'in pm:
+        platform_model = 'Ion Torrent PGM'
+    elif 'ion' and 'torrent' and 'proton' in pm:
+        platform_model = 'Ion Torrent Proton'
+    elif 'pacbio' in pm:
+        platform_model = 'PacBio RS'
+    else:
+        logger.error('The read group {0} has an unrecognized PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
+        logger.error('Accepted values include:'
+                     + '\t 454 GS FLX Titanium'
+                     + '\t AB SOLiD 2'
+                     + '\t AB SOLiD 3'
+                     + '\t AB SOLiD 4'
+                     + '\t Complete Genomics'
+                     + '\t Illumina HiSeq X Ten'
+                     + '\t Illumina HiSeq X Five'
+                     + '\t Illumina Genome Analyzer II'
+                     + '\t Illumina Genome Analyzer IIx'
+                     + '\t Illumina HiSeq 2000'
+                     + '\t Illumina HiSeq 2500'
+                     + '\t Illumina HiSeq 4000'
+                     + '\t Illumina MiSeq'
+                     + '\t Illumina NextSeq'
+                     + '\t Ion Torrent PGM'
+                     + '\t Ion Torrent Proton'
+                     + '\t PacBio RS'
+                     + '\t Other')
+        sys.exit(1)
+    return platform_model
+
 def harmonize_readgroup(readgroup_dict, logger):
-    PLATFORM_ARRAY = ('illumina', 'solid', 'ls454', 'ion torrent', 'iontorrent', 'complete genomics', 'completegenomics', 'pacbio', 'pac bio', 'other', 'capillary', 'helicos', 'ont')
     if not 'ID' in readgroup_dict:
         logger.error('"ID" is missing from readgroup: {}'.format(readgroup_dict))
         sys.exit(1)
-    if 'PL' in readgroup_dict:
-        platform = readgroup_dict['PL'].lower()
-        if platform == 'illumina':
-            readgroup_dict['PL'] = 'Illumina'
-        elif platform == 'solid':
-            readgroup_dict['PL'] = 'SOLiD'
-        elif platform == 'ls454':
-            readgroup_dict['PL'] = 'LS454'
-        elif platform in ('ion torrent', 'iontorrent'):
-            readgroup_dict['PL'] = 'Ion Torrent'
-        elif platform in ('complete genomics', 'completegenomics'):
-            readgroup_dict['PL'] = 'Complete Genomics'
-        elif platform in ('pac bio', 'pacbio'):
-            readgroup_dict['PL'] = 'PacBio'
-        elif platform == 'other':
-            readgroup_dict['PL'] = 'Other'
-        elif platform in ('capillary', 'helicos', 'ont'):
-            readgroup_dict['PL'] = 'Other'
-        else:
-            logger.error('The read group {0} has an unrecognized PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
-            logger.error('Accepted values include:'
-                         + '\t Illumina'
-                         + '\t SOLiD'
-                         + '\t LS454'
-                         + '\t Ion Torrent'
-                         + '\t Complete Genomics'
-                         + '\t PacBio'
-                         + '\t Other')
-            sys.exit(1)
-    if 'PM' in readgroup_dict:
-        pm = readgroup_dict['PM'].lower().strip().replace(' ','').replace('-','').replace('_','').replace('.','').replace(',','')
-        if '454' and ('gs' or 'flx' or 'titanium') in pm:
-            readgroup_dict['PM'] = '454 GS FLX Titanium'
-        elif 'solid' and '2' in pm:
-            readgroup_dict['PM'] = 'AB SOLiD 2'
-        elif 'solid' and '3' in pm:
-            readgroup_dict['PM'] = 'AB SOLiD 3'
-        elif 'solid' and '4' in pm:
-            readgroup_dict['PM'] = 'AB SOLiD 4'
-        elif 'complete' and 'genomics' in pm:
-            readgroup_dict['PM'] = 'Complete Genomics'
-        elif 'illumina' and 'hiseq' and 'x' and ('10' or 'ten') in pm:
-            readgroup_dict['PM'] = 'Illumina HiSeq X Ten'
-        elif 'illumina' and 'hiseq' and 'x' and ('5' or 'five') in pm:
-            readgroup_dict['PM'] = 'Illumina HiSeq X Five'
-        elif 'illumina' and 'iix' in pm:
-            readgroup_dict['PM'] = 'Illumina Genome Analyzer IIx'
-        elif 'illumina' and 'ii' in pm:
-            readgroup_dict['PM'] = 'Illumina Genome Analyzer II'
-        elif 'illumina' and '2000' in pm:
-            readgroup_dict['PM'] = 'Illumina HiSeq 2000'
-        elif 'illumina' and '2500' in pm:
-            readgroup_dict['PM'] = 'Illumina HiSeq 2500'
-        elif 'illumina' and '4000' in pm:
-            readgroup_dict['PM'] = 'Illumina HiSeq 4000'
-        elif 'illumina' and 'miseq' in pm:
-            readgroup_dict['PM'] = 'Illumina MiSeq'
-        elif 'ion' and 'torrent' and 'pgm 'in pm:
-            readgroup_dict['PM'] = 'Ion Torrent PGM'
-        elif 'ion' and 'torrent' and 'proton' in pm:
-            readgroup_dict['PM'] = 'Ion Torrent Proton'
-        elif 'pacbio' in pm:
-            readgroup_dict['PM'] = 'PacBio RS'
-        else:
-            logger.error('The read group {0} has an unrecognized PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
-            logger.error('Accepted values include:'
-                         + '\t 454 GS FLX Titanium'
-                         + '\t AB SOLiD 2'
-                         + '\t AB SOLiD 3'
-                         + '\t AB SOLiD 4'
-                         + '\t Complete Genomics'
-                         + '\t Illumina HiSeq X Ten'
-                         + '\t Illumina HiSeq X Five'
-                         + '\t Illumina Genome Analyzer II'
-                         + '\t Illumina Genome Analyzer IIx'
-                         + '\t Illumina HiSeq 2000'
-                         + '\t Illumina HiSeq 2500'
-                         + '\t Illumina HiSeq 4000'
-                         + '\t Illumina MiSeq'
-                         + '\t Illumina NextSeq'
-                         + '\t Ion Torrent PGM'
-                         + '\t Ion Torrent Proton'
-                         + '\t PacBio RS'
-                         + '\t Other')
-            sys.exit(1)
-
+    pl = get_platform(readgroup_dict)
+    pm = get_platform_model(readgroup_dict)
+    if pl:
+        readgroup_dict['PL'] = pl
+    if pm:
+        readgroup_dict['PM'] = pm
     return readgroup_dict
 
 def check_platform(platform, logger):
