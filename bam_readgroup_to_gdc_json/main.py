@@ -161,15 +161,15 @@ def extract_readgroup_json(bam_path, logger):
     else:
         for bam_readgroup_dict in bam_readgroup_dict_list:
             logger.debug('bam_readgroup_dict: {}'.format(bam_readgroup_dict))
-            harmonize_readgroup(bam_readgroup_dict, logger)
+            rg = harmonize_readgroup(bam_readgroup_dict, logger)
             readgroup_meta = dict()
             readgroup_meta['aliquots'] = dict()
-            readgroup_meta['aliquots']['submitter_id'] = bam_readgroup_dict.get('SM', 'REQUIRED<string>')
-            readgroup_meta['experiment_name'] = bam_readgroup_dict.get('DS', 'REQUIRED<string>')
-            readgroup_meta['library_name'] = bam_readgroup_dict.get('LB', 'REQUIRED<string>')
-            readgroup_meta['platform'] = bam_readgroup_dict.get('PL', 'REQUIRED<enumeration>')
-            readgroup_meta['read_group_name'] = bam_readgroup_dict.get('ID', 'REQUIRED<string>')
-            readgroup_meta['sequencing_center'] = bam_readgroup_dict.get('CN', 'REQUIRED<string>')
+            readgroup_meta['aliquots']['submitter_id'] = rg.get('SM', 'REQUIRED<string>')
+            readgroup_meta['experiment_name'] = rg.get('DS', 'REQUIRED<string>')
+            readgroup_meta['library_name'] = rg.get('LB', 'REQUIRED<string>')
+            readgroup_meta['platform'] = rg.get('PL', 'REQUIRED<enumeration>')
+            readgroup_meta['read_group_name'] = rg.get('ID', 'REQUIRED<string>')
+            readgroup_meta['sequencing_center'] = rg.get('CN', 'REQUIRED<string>')
             if readgroup_meta['aliquots']['submitter_id'] != 'REQUIRED<string>':
                 readgroup_meta['submitter_id'] = readgroup_meta['aliquots']['submitter_id']+'_'+readgroup_meta['read_group_name']
             else:
@@ -181,14 +181,14 @@ def extract_readgroup_json(bam_path, logger):
             readgroup_meta['target_capture_kit'] = 'REQUIRED<enumeration>'
 
             # possible use
-            barcode_sequence = bam_readgroup_dict.get('BC', None) # CHECK_MATCH with multiplex_barcode, if present, below
-            description = bam_readgroup_dict.get('DS', None) # experiment?
+            barcode_sequence = rg.get('BC', None) # CHECK_MATCH with multiplex_barcode, if present, below
+            description = rg.get('DS', None) # experiment?
 
-            predicted_median_insert_size = bam_readgroup_dict.get('PI', None)
-            readgroup_meta['instrument_model'] = bam_readgroup_dict.get('PM', 'OPTIONAL<enumeration>')
-            readgroup_meta['sequencing_date'] = bam_readgroup_dict.get('DT', 'OPTIONAL<ISO8601 date or date/time, null>')
+            predicted_median_insert_size = rg.get('PI', None)
+            readgroup_meta['instrument_model'] = rg.get('PM', 'OPTIONAL<enumeration>')
+            readgroup_meta['sequencing_date'] = rg.get('DT', 'OPTIONAL<ISO8601 date or date/time, null>')
 
-            platform_unit = bam_readgroup_dict.get('PU', None)
+            platform_unit = rg.get('PU', None)
             pu_dict = resolve_platform_unit(platform_unit)
             if pu_dict:
                 readgroup_meta['flow_cell_barcode'] = pu_dict.get('FB', 'OPTIONAL<string>')
