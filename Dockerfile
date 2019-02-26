@@ -2,7 +2,7 @@ FROM ubuntu:cosmic-20190131
 
 MAINTAINER Jeremiah H. Savage <jeremiahsavage@gmail.com>
 
-ENV version 0.6
+ENV version 0.7
 
 RUN apt-get update \
     && export DEBIAN_FRONTEND=noninteractive \

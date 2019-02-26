@@ -155,10 +155,6 @@ def harmonize_readgroup(readgroup_dict, logger):
         readgroup_dict['DT'] = dt
     return readgroup_dict
 
-def check_platform(platform, logger):
-    
-    return
-
 def extract_readgroup_json(bam_path, logger):
     step_dir = os.getcwd()
     bam_file = os.path.basename(bam_path)
