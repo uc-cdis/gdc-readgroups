@@ -7,6 +7,7 @@ import os
 import re
 import sys
 
+from dateutil import parser
 import pysam
 
 def resolve_platform_unit(platform_unit):
@@ -129,16 +130,29 @@ def get_platform_mode(readgroup_dict):
         sys.exit(1)
     return platform_model
 
+def get_datetime(readgroup_dict):
+    if not 'DT' in readgroup_dict:
+        return None
+    try:
+        dt = parser.parse(readgroup_dict['DT'])
+    except (ValueError, TypeError) as e:
+        logger.error('The read group {0} has an unrecognized DT (datetime) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['DT']))
+        sys.exit(1)
+    return dt.isoformat()
+
 def harmonize_readgroup(readgroup_dict, logger):
     if not 'ID' in readgroup_dict:
         logger.error('"ID" is missing from readgroup: {}'.format(readgroup_dict))
         sys.exit(1)
     pl = get_platform(readgroup_dict)
     pm = get_platform_model(readgroup_dict)
+    dt = get_datetime(readgroup_dict)
     if pl:
         readgroup_dict['PL'] = pl
     if pm:
         readgroup_dict['PM'] = pm
+    if dt:
+        readgroup_dict['DT'] = dt
     return readgroup_dict
 
 def check_platform(platform, logger):
