@@ -67,7 +67,7 @@ def get_platform(readgroup_dict, logger):
                      + '\t Other\n')
         raise InvalidPlatformError
     return platform
-    
+
 def get_platform_model(readgroup_dict, logger):
     if not 'PM' in readgroup_dict:
         return None
