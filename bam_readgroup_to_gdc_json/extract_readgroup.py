@@ -45,11 +45,11 @@ def get_platform(readgroup_dict, logger):
         platform = 'SOLiD'
     elif '454' in pl:
         platform = 'LS454'
-    elif 'ion' and  'torrent' in pl:
+    elif all(x in pl for x in ('ion', 'torrent')):
         platform = 'Ion Torrent'
-    elif 'complete' and 'genomics' in pl:
+    elif all(x in pl for x in ('complete', 'genomics')):
         platform = 'Complete Genomics'
-    elif 'pac' and 'bio' in pl:
+    elif all(x in pl for x in ('pac', 'bio')):
         platform = 'PacBio'
     elif 'other' in pl:
         platform = 'Other'
@@ -74,33 +74,33 @@ def get_platform_model(readgroup_dict, logger):
     pm = readgroup_dict['PM'].lower().strip().replace(' ','').replace('-','').replace('_','').replace('.','').replace(',','')
     if '454' and ('gs' or 'flx' or 'titanium') in pm:
         platform_model = '454 GS FLX Titanium'
-    elif 'solid' and '2' in pm:
+    elif all(x in pm for x in ('solid', '2')):
         platform_model = 'AB SOLiD 2'
-    elif 'solid' and '3' in pm:
+    elif all(x in pm for x in ('solid', '3')):
         platform_model = 'AB SOLiD 3'
-    elif 'solid' and '4' in pm:
+    elif all(x in pm for x in ('solid', '4')):
         platform_model = 'AB SOLiD 4'
-    elif 'complete' and 'genomics' in pm:
+    elif all(x in pm for x in ('complete', 'genomics')):
         platform_model = 'Complete Genomics'
-    elif 'illumina' and 'hiseq' and 'x' and ('10' or 'ten') in pm:
+    elif all(x in pm for x in ('illumina', 'hiseq', 'x')) and any(x in pm for x in ('10', 'ten')):
         platform_model = 'Illumina HiSeq X Ten'
-    elif 'illumina' and 'hiseq' and 'x' and ('5' or 'five') in pm:
+    elif all(x in pm for x in ('illumina', 'hiseq', 'x')) and any(x in pm for x in ('5', 'five')):
         platform_model = 'Illumina HiSeq X Five'
-    elif 'illumina' and 'iix' in pm:
+    elif all (x in pm for x in ('illumina', 'iix')):
         platform_model = 'Illumina Genome Analyzer IIx'
-    elif 'illumina' and 'ii' in pm:
+    elif all (x in pm for x in ('illumina', 'ii')):
         platform_model = 'Illumina Genome Analyzer II'
-    elif 'illumina' and '2000' in pm:
+    elif all (x in pm for x in ('illumina', '2000')):
         platform_model = 'Illumina HiSeq 2000'
-    elif 'illumina' and '2500' in pm:
+    elif all (x in pm for x in ('illumina', '2500')):
         platform_model = 'Illumina HiSeq 2500'
-    elif 'illumina' and '4000' in pm:
+    elif all (x in pm for x in ('illumina', '4000')):
         platform_model = 'Illumina HiSeq 4000'
-    elif 'illumina' and 'miseq' in pm:
+    elif all (x in pm for x in ('illumina', 'miseq')):
         platform_model = 'Illumina MiSeq'
-    elif 'ion' and 'torrent' and 'pgm 'in pm:
+    elif all (x in pm for x in ('ion', 'torrent', 'pgm')):
         platform_model = 'Ion Torrent PGM'
-    elif 'ion' and 'torrent' and 'proton' in pm:
+    elif all (x in pm for x in ('ion', 'torrent', 'proton'):
         platform_model = 'Ion Torrent Proton'
     elif 'pacbio' in pm:
         platform_model = 'PacBio RS'
