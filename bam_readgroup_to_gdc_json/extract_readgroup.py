@@ -230,7 +230,7 @@ def get_readgroup_dict_list(samfile, logger):
             readgroup_meta['to_trim_adapter_sequence'] = 'OPTIONAL<boolean>'
             readgroup_meta['type'] = 'read_group'
             out_readgroup_dict_list.append(readgroup_meta)
-        return out_readgroup_dict_list
+    return out_readgroup_dict_list
 
 def extract_readgroup_json(bam_path, logger):
     step_dir = os.getcwd()
