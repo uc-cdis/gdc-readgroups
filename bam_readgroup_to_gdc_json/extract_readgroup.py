@@ -100,7 +100,7 @@ def get_platform_model(readgroup_dict, logger):
         platform_model = 'Illumina MiSeq'
     elif all (x in pm for x in ('ion', 'torrent', 'pgm')):
         platform_model = 'Ion Torrent PGM'
-    elif all (x in pm for x in ('ion', 'torrent', 'proton'):
+    elif all (x in pm for x in ('ion', 'torrent', 'proton')):
         platform_model = 'Ion Torrent Proton'
     elif 'pacbio' in pm:
         platform_model = 'PacBio RS'
@@ -158,7 +158,10 @@ def extract_readgroup_json(bam_path, logger):
     bam_file = os.path.basename(bam_path)
     bam_name, bam_ext = os.path.splitext(bam_file)
     readgroups_json_file = bam_name+'.json'
-    samfile = pysam.AlignmentFile(bam_path, 'rb', check_header=True, check_sq=False)
+    try:
+        samfile = pysam.AlignmentFile(bam_path, 'rb', check_header=True, check_sq=False)
+    finally:
+        samfile.close()
     samfile_header = samfile.header
     bam_readgroup_dict_list = samfile_header.get('RG')
     out_readgroup_dict_list = list()
