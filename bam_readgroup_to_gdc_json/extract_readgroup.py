@@ -72,7 +72,7 @@ def get_platform_model(readgroup_dict, logger):
     if not 'PM' in readgroup_dict:
         return None
     pm = readgroup_dict['PM'].lower().strip().replace(' ','').replace('-','').replace('_','').replace('.','').replace(',','')
-    if '454' pm and any(x in pm for x in ('gs', 'flx', 'titanium')):
+    if '454' in pm and any(x in pm for x in ('gs', 'flx', 'titanium')):
         platform_model = '454 GS FLX Titanium'
     elif all(x in pm for x in ('solid', '2')):
         platform_model = 'AB SOLiD 2'
