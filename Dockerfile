@@ -10,5 +10,5 @@ RUN apt-get update \
        python3-pip \
        samtools \
     && apt-get clean \
-    && pip3 install bam_readgroup_to_gdc_json \
+    && pip3 install bam_readgroup_to_gdc_json==0.8 \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache
