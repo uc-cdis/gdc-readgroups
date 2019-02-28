@@ -10,7 +10,7 @@ import unittest
 
 import pysam
 
-from bam_readgroup_to_gdc_json import main
+from bam_readgroup_to_gdc_json import __main__ as main
 from bam_readgroup_to_gdc_json.exceptions import SamtoolsViewError
 
 SAMFILE='rg_header_conflicting_bc_pu2dot.sam'

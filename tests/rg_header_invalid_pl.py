@@ -9,7 +9,7 @@ import unittest
 
 import pysam
 
-from bam_readgroup_to_gdc_json import main
+from bam_readgroup_to_gdc_json import __main__ as main
 from bam_readgroup_to_gdc_json.exceptions import InvalidPlatformError
 
 SAMFILE='rg_header_invalid_pl.sam'
@@ -32,6 +32,9 @@ class TestInvalidPl(unittest.TestCase):
             self.testjson = extract_readgroup.extract_readgroup_json(self.bam, self.logger)
         except InvalidPlatformError:
             pass
+        else:
+            self.logger.error('Input File\n\t{}\ndid not raise `InvalidPlatformError`'.format(self.bam))
+            raise RuntimeError
 
 if __name__ == "__main__":
     unittest.main()

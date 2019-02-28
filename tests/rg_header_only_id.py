@@ -10,7 +10,7 @@ import unittest
 
 import pysam
 
-from bam_readgroup_to_gdc_json import main
+from bam_readgroup_to_gdc_json import __main__ as main
 
 SAMFILE='rg_header_only_id.sam'
 EXPECTEDJSON = 'expected.rg_header_only_id.json'

@@ -5,7 +5,7 @@ import logging
 import os
 import sys
 
-from bam_readgroup_to_gdc_json import extract_readgroup
+from bam_readgroup_to_gdc_json.extract_readgroup import extract_readgroup_json
 
 from bam_readgroup_to_gdc_json.exceptions import NotABamError
 

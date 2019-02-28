@@ -9,7 +9,7 @@ import unittest
 
 import pysam
 
-from bam_readgroup_to_gdc_json import main
+from bam_readgroup_to_gdc_json import __main__ as main
 from bam_readgroup_to_gdc_json.exceptions import MissingReadgroupIdError
 
 SAMFILE='rg_header_no_id.sam'
@@ -32,6 +32,10 @@ class TestNoId(unittest.TestCase):
             self.testjson = extract_readgroup.extract_readgroup_json(self.bam, self.logger)
         except MissingReadgroupIdError:
             pass
+        else:
+            self.logger.error('Input File\n\t{}\ndid not raise `MissingReadgroupIdError`'.format(self.bam))
+            raise RuntimeError
+
 
 if __name__ == "__main__":
     unittest.main()

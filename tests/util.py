@@ -10,10 +10,12 @@ def make_bam(sam_path):
     bam_file = sam_base + '.bam'
     bam_path = os.path.join(sam_dir, bam_file)
 
-    infile = pysam.AlignmentFile(sam_path, "r", check_sq=False)
-    outfile = pysam.AlignmentFile(bam_path, "wb", template=infile)
-    for line in infile:        
-        outfile.write(line)
+    with open(sam_path, 'r') as f_in:
+        infile = pysam.AlignmentFile(f_in, "r", check_sq=False)
+        with open(bam_path, 'wb') as f_out:
+            outfile = pysam.AlignmentFile(bam_path, "wb", template=infile)
+            for line in infile:
+                outfile.write(line)
     return bam_path
 
 def make_bam_view(sam_path):

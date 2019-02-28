@@ -14,7 +14,7 @@
         "library_strategy": "REQUIRED<enumeration>",
         "read_length": "REQUIRED<integer,null>",
         "target_capture_kit": "REQUIRED<enumeration>",
-        "instrument_model": "AB SOLiD 4",
+        "instrument_model": "Illumina HiSeq 4000",
         "sequencing_date": "2012-01-23T00:00:00-05:00",
         "flow_cell_barcode": "C079LACXX120123",
         "lane_number": 1,

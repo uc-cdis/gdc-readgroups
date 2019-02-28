@@ -6,7 +6,7 @@ import sys
 from dateutil import parser
 import pysam
 
-from bam_readgroup_to_gdc_json.exceptions import NoReadGroupError, InvalidPlatformError, InvalidPlatformModelError, MissingReadgroupIdError, InvalidDatetimeError
+from bam_readgroup_to_gdc_json.exceptions import NoReadGroupError, InvalidPlatformError, InvalidPlatformModelError, MissingReadgroupIdError, InvalidDatetimeError, NotABamError
 
 def resolve_platform_unit(platform_unit):
     if not platform_unit:
@@ -153,12 +153,12 @@ def harmonize_readgroup(readgroup_dict, logger):
         readgroup_dict['DT'] = dt
     return readgroup_dict
 
-def get_readgroup_dict_list(samfile):
+def get_readgroup_dict_list(samfile, logger):
     samfile_header = samfile.header
     bam_readgroup_dict_list = samfile_header.get('RG')
 
     if not bam_readgroup_dict_list:
-        logger.error('There are no readgroups in BAM: {}'.format(bam_name))
+        logger.error('There are no readgroups in BAM: {}'.format(samfile.filename))
         raise NoReadGroupError
     else:
         out_readgroup_dict_list = list()
@@ -239,7 +239,10 @@ def extract_readgroup_json(bam_path, logger):
     readgroups_json_file = bam_name+'.json'
     with open (bam_path) as f:
         samfile = pysam.AlignmentFile(f, 'rb', check_header=True, check_sq=False)
-        readgroup_dict_list = get_readgroup_dict_list(samfile)
+        if not samfile.is_bam:
+            logger.error("This program only runs on BAM files.")
+            raise NotABamError
+        readgroup_dict_list = get_readgroup_dict_list(samfile, logger)
     with open(readgroups_json_file, 'w') as f:
-        json.dump(out_readgroup_dict_list, f, indent=4)
+        json.dump(readgroup_dict_list, f, indent=4)
     return readgroups_json_file
