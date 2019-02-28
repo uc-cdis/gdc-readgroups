@@ -11,7 +11,8 @@ setup(name = 'bam_readgroup_to_gdc_json',
       license = 'Apache 2.0',
       packages = find_packages(),
       install_requires = [
-          'pysam==0.15.2'
+          'pysam==0.15.2',
+          'python-dateutil==2.8.0'
       ],
       classifiers = [
           'Development Status :: 3 - Alpha',
