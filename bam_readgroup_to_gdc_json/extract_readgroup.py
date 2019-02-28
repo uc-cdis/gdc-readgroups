@@ -153,15 +153,7 @@ def harmonize_readgroup(readgroup_dict, logger):
         readgroup_dict['DT'] = dt
     return readgroup_dict
 
-def extract_readgroup_json(bam_path, logger):
-    step_dir = os.getcwd()
-    bam_file = os.path.basename(bam_path)
-    bam_name, bam_ext = os.path.splitext(bam_file)
-    readgroups_json_file = bam_name+'.json'
-    try:
-        samfile = pysam.AlignmentFile(bam_path, 'rb', check_header=True, check_sq=False)
-    finally:
-        samfile.close()
+def get_readgroup_dict_list(samfile):
     samfile_header = samfile.header
     bam_readgroup_dict_list = samfile_header.get('RG')
     out_readgroup_dict_list = list()
@@ -239,6 +231,14 @@ def extract_readgroup_json(bam_path, logger):
             readgroup_meta['type'] = 'read_group'
             out_readgroup_dict_list.append(readgroup_meta)
 
+def extract_readgroup_json(bam_path, logger):
+    step_dir = os.getcwd()
+    bam_file = os.path.basename(bam_path)
+    bam_name, bam_ext = os.path.splitext(bam_file)
+    readgroups_json_file = bam_name+'.json'
+    with open (bam_path) as f:
+        samfile = pysam.AlignmentFile(bam_path, 'rb', check_header=True, check_sq=False)
+        readgroup_dict_list = get_readgroup_dict_list(samfile)
     with open(readgroups_json_file, 'w') as f:
         json.dump(out_readgroup_dict_list, f, indent=4)
     return readgroups_json_file
