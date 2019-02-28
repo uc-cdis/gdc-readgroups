@@ -7,7 +7,7 @@ import sys
 
 from bam_readgroup_to_gdc_json import extract_readgroup
 
-from bam_readgroup_to_gdc_json.exceptions import NoReadGroupError
+from bam_readgroup_to_gdc_json.exceptions import NotABamError
 
 def validate_inputs(bam_path, logger):
     bam_file = os.path.basename(bam_path)
