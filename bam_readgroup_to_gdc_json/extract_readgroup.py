@@ -239,7 +239,7 @@ def extract_readgroup_json(bam_path, logger):
         if not bam_readgroup_dict_list:
             logger.error('There are no readgroups in BAM: {}'.format(samfile.filename))
             raise NoReadGroupError
-        readgroup_dict_list = get_readgroup_dict_list(samfile, logger)
+        readgroup_dict_list = get_readgroup_dict_list(bam_readgroup_dict_list, logger)
     with open(readgroups_json_file, 'w') as f:
         json.dump(readgroup_dict_list, f, indent=4)
     return readgroups_json_file
