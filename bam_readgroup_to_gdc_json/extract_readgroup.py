@@ -233,7 +233,6 @@ def get_readgroup_dict_list(samfile, logger):
     return out_readgroup_dict_list
 
 def extract_readgroup_json(bam_path, logger):
-    step_dir = os.getcwd()
     bam_file = os.path.basename(bam_path)
     bam_name, bam_ext = os.path.splitext(bam_file)
     readgroups_json_file = bam_name+'.json'
