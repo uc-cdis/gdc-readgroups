@@ -237,7 +237,7 @@ def extract_readgroup_json(bam_path, logger):
     bam_name, bam_ext = os.path.splitext(bam_file)
     readgroups_json_file = bam_name+'.json'
     with open (bam_path) as f:
-        samfile = pysam.AlignmentFile(bam_path, 'rb', check_header=True, check_sq=False)
+        samfile = pysam.AlignmentFile(f, 'rb', check_header=True, check_sq=False)
         readgroup_dict_list = get_readgroup_dict_list(samfile)
     with open(readgroups_json_file, 'w') as f:
         json.dump(out_readgroup_dict_list, f, indent=4)
