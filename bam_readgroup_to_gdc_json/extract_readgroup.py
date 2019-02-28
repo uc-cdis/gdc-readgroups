@@ -6,6 +6,8 @@ import sys
 from dateutil import parser
 import pysam
 
+from bam_readgroup_to_gdc_json.exceptions import NoReadGroupError, InvalidPlatformError, InvalidPlatformModelError, MissingReadgroupIdError, InvalidDatetimeError
+
 def resolve_platform_unit(platform_unit):
     if not platform_unit:
         return None
@@ -15,7 +17,7 @@ def resolve_platform_unit(platform_unit):
     result2 = re.search(pu_2dot_regex, platform_unit)
     if result2:
         flow_cell_barcode = result2.group(1)
-        lane_number = result2.group(1)
+        lane_number = result2.group(2)
         multiplex_barcode = result2.group(3)
         if lane_number.isdigit():
             pu_dict = dict()
@@ -25,15 +27,15 @@ def resolve_platform_unit(platform_unit):
     else:
         result1 = re.search(pu_1dot_regex, platform_unit)
         if result1:
-            flow_cell_barcode = result2.group(1)
-            lane_number = result2.group(2)
+            flow_cell_barcode = result1.group(1)
+            lane_number = result1.group(2)
             if lane_number.isdigit():
                 pu_dict = dict()
                 pu_dict['FB'] = flow_cell_barcode
                 pu_dict['LN'] = int(lane_number)
     return pu_dict
 
-def get_platform(readgroup_dict):
+def get_platform(readgroup_dict, logger):
     if not 'PL' in readgroup_dict:
         return None
     pl = readgroup_dict['PL'].lower()
@@ -51,22 +53,22 @@ def get_platform(readgroup_dict):
         platform = 'PacBio'
     elif 'other' in pl:
         platform = 'Other'
-    elif platform in ('capillary', 'helicos', 'ont'): #in the SAM specification
+    elif pl in ('capillary', 'helicos', 'ont'): #in the SAM specification
         platform = 'Other'
     else:
         logger.error('The read group {0} has an unrecognized PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
-        logger.error('Accepted values include:'
-                     + '\t Illumina'
-                     + '\t SOLiD'
-                     + '\t LS454'
-                     + '\t Ion Torrent'
-                     + '\t Complete Genomics'
-                     + '\t PacBio'
-                     + '\t Other')
-        sys.exit(1)
+        logger.error('Accepted values include:\n'
+                     + '\t Illumina\n'
+                     + '\t SOLiD\n'
+                     + '\t LS454\n'
+                     + '\t Ion Torrent\n'
+                     + '\t Complete Genomics\n'
+                     + '\t PacBio\n'
+                     + '\t Other\n')
+        raise InvalidPlatformError
     return platform
     
-def get_platform_model(readgroup_dict):
+def get_platform_model(readgroup_dict, logger):
     if not 'PM' in readgroup_dict:
         return None
     pm = readgroup_dict['PM'].lower().strip().replace(' ','').replace('-','').replace('_','').replace('.','').replace(',','')
@@ -104,45 +106,45 @@ def get_platform_model(readgroup_dict):
         platform_model = 'PacBio RS'
     else:
         logger.error('The read group {0} has an unrecognized PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
-        logger.error('Accepted values include:'
-                     + '\t 454 GS FLX Titanium'
-                     + '\t AB SOLiD 2'
-                     + '\t AB SOLiD 3'
-                     + '\t AB SOLiD 4'
-                     + '\t Complete Genomics'
-                     + '\t Illumina HiSeq X Ten'
-                     + '\t Illumina HiSeq X Five'
-                     + '\t Illumina Genome Analyzer II'
-                     + '\t Illumina Genome Analyzer IIx'
-                     + '\t Illumina HiSeq 2000'
-                     + '\t Illumina HiSeq 2500'
-                     + '\t Illumina HiSeq 4000'
-                     + '\t Illumina MiSeq'
-                     + '\t Illumina NextSeq'
-                     + '\t Ion Torrent PGM'
-                     + '\t Ion Torrent Proton'
-                     + '\t PacBio RS'
+        logger.error('Accepted values include:\n'
+                     + '\t 454 GS FLX Titanium\n'
+                     + '\t AB SOLiD 2\n'
+                     + '\t AB SOLiD 3\n'
+                     + '\t AB SOLiD 4\n'
+                     + '\t Complete Genomics\n'
+                     + '\t Illumina HiSeq X Ten\n'
+                     + '\t Illumina HiSeq X Five\n'
+                     + '\t Illumina Genome Analyzer II\n'
+                     + '\t Illumina Genome Analyzer IIx\n'
+                     + '\t Illumina HiSeq 2000\n'
+                     + '\t Illumina HiSeq 2500\n'
+                     + '\t Illumina HiSeq 4000\n'
+                     + '\t Illumina MiSeq\n'
+                     + '\t Illumina NextSeq\n'
+                     + '\t Ion Torrent PGM\n'
+                     + '\t Ion Torrent Proton\n'
+                     + '\t PacBio RS\n'
                      + '\t Other')
-        sys.exit(1)
+        raise InvalidPlatformModelError
     return platform_model
 
-def get_datetime(readgroup_dict):
+def get_datetime(readgroup_dict, logger):
     if not 'DT' in readgroup_dict:
         return None
     try:
         dt = parser.parse(readgroup_dict['DT'])
     except (ValueError, TypeError) as e:
         logger.error('The read group {0} has an unrecognized DT (datetime) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['DT']))
-        sys.exit(1)
+        raise InvalidDatetimeError
     return dt.isoformat()
 
 def harmonize_readgroup(readgroup_dict, logger):
     if not 'ID' in readgroup_dict:
         logger.error('"ID" is missing from readgroup: {}'.format(readgroup_dict))
-        sys.exit(1)
-    pl = get_platform(readgroup_dict)
-    pm = get_platform_model(readgroup_dict)
-    dt = get_datetime(readgroup_dict)
+        raise MissingReadgroupIdError
+    pl = get_platform(readgroup_dict, logger)
+    pm = get_platform_model(readgroup_dict, logger)
+    dt = get_datetime(readgroup_dict, logger)
     if pl:
         readgroup_dict['PL'] = pl
     if pm:
@@ -161,12 +163,12 @@ def extract_readgroup_json(bam_path, logger):
     bam_readgroup_dict_list = samfile_header.get('RG')
     out_readgroup_dict_list = list()
     
-    if len(bam_readgroup_dict_list) < 1:
+    if not bam_readgroup_dict_list:
         logger.error('There are no readgroups in BAM: {}'.format(bam_name))
-        sys.exit(1)
+        raise NoReadGroupError
     else:
         for bam_readgroup_dict in bam_readgroup_dict_list:
-            logger.debug('bam_readgroup_dict: {}'.format(bam_readgroup_dict))
+            # logger.debug('bam_readgroup_dict: {}'.format(bam_readgroup_dict))
             rg = harmonize_readgroup(bam_readgroup_dict, logger)
             readgroup_meta = dict()
             readgroup_meta['aliquots'] = dict()
