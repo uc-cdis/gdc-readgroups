@@ -21,3 +21,7 @@ class MissingReadgroupIdError(Exception):
 class InvalidDatetimeError(Exception):
     """InvalidDatetimeError"""
     pass
+
+class NotABamError(Exception):
+    """NotABamError"""
+    pass
