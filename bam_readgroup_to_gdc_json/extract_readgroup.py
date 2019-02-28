@@ -156,12 +156,12 @@ def harmonize_readgroup(readgroup_dict, logger):
 def get_readgroup_dict_list(samfile):
     samfile_header = samfile.header
     bam_readgroup_dict_list = samfile_header.get('RG')
-    out_readgroup_dict_list = list()
     
     if not bam_readgroup_dict_list:
         logger.error('There are no readgroups in BAM: {}'.format(bam_name))
         raise NoReadGroupError
     else:
+        out_readgroup_dict_list = list()
         for bam_readgroup_dict in bam_readgroup_dict_list:
             # logger.debug('bam_readgroup_dict: {}'.format(bam_readgroup_dict))
             rg = harmonize_readgroup(bam_readgroup_dict, logger)
