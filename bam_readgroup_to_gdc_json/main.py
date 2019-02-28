@@ -49,7 +49,7 @@ def get_platform(readgroup_dict):
         platform = 'LS454'
     elif 'ion' and  'torrent' in pl:
         platform = 'Ion Torrent'
-    elif 'complete' and 'genomics' pl:
+    elif 'complete' and 'genomics' in pl:
         platform = 'Complete Genomics'
     elif 'pac' and 'bio' in pl:
         platform = 'PacBio'
@@ -162,12 +162,13 @@ def extract_readgroup_json(bam_path, logger):
     readgroups_json_file = bam_name+'.json'
     samfile = pysam.AlignmentFile(bam_path, 'rb', check_header=True, check_sq=False)
     samfile_header = samfile.header
-    bam_readgroup_dict_list = samfile_header.get('RG')
+    bam_readgroup_dict_list = samfile_header.get('RG', [])
     out_readgroup_dict_list = list()
     
     if len(bam_readgroup_dict_list) < 1:
-        logger.error('There are no readgroups in BAM: {}'.format(bam_name))
-        sys.exit(1)
+        msg = 'There are no readgroups in BAM: {}'.format(bam_name)
+        logger.exception(msg)
+        raise ValueError(msg) 
     else:
         for bam_readgroup_dict in bam_readgroup_dict_list:
             logger.debug('bam_readgroup_dict: {}'.format(bam_readgroup_dict))
@@ -246,9 +247,9 @@ def validate_inputs(bam_path, logger):
     bam_file = os.path.basename(bam_path)
     bam_name, bam_ext = os.path.splitext(bam_file)
     if bam_ext != '.bam':
-        logger.error("This program only runs on BAM files, which must have the file suffix '.bam'")
-        sys.exit(1)
-    return
+        msg = "This program only runs on BAM files, which must have the file suffix '.bam'"
+        logger.exception(msg)
+        raise ValueError(msg) 
 
 def setup_logging(args):
     logging.basicConfig(
