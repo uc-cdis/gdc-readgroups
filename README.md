@@ -12,7 +12,7 @@ Other fields are optional, and are marked `OPTIONAL<type>`. If these fields coul
 There are 2 ways to use `bam_readgroup_to_gdc_json`
 
 ### pip install
-`bam_readgroup_to_gdc_json` may be used as a `pip` installed package.
+`bam_readgroup_to_gdc_json` may be used as a `pip` installed python package.
 
 If you would like to install the package as root, for all users, run
 ```
