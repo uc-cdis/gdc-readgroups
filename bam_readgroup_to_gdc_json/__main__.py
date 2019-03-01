@@ -3,7 +3,6 @@
 import argparse
 import logging
 import os
-import sys
 
 from bam_readgroup_to_gdc_json.extract_readgroup import extract_readgroup_json
 
@@ -19,7 +18,6 @@ def validate_inputs(bam_path, logger):
 
 def setup_logging(args):
     logging.basicConfig(
-        #filename=os.path.join('output.log'),
         level=args.level,
         filemode='w',
         format='%(asctime)s %(levelname)s %(message)s',
