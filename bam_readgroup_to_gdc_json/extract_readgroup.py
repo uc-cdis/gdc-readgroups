@@ -104,7 +104,7 @@ def get_platform_model(readgroup_dict, logger):
     elif 'pacbio' in pm:
         platform_model = 'PacBio RS'
     else:
-        logger.error('The read group {0} has an unrecognized PL (platform) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
+        logger.error('The read group {0} has an unrecognized PM (platform model) value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PM']))
         logger.error('Accepted values include:\n'
                      + '\t 454 GS FLX Titanium\n'
                      + '\t AB SOLiD 2\n'
