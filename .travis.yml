@@ -1,5 +1,23 @@
+dist: xenial
 language: python
+addons:
+  apt:
+    packages:
+      - gcc
+      - make
+      - python3-pip
+      - libncurses5-dev
+      - zlib1g-dev
+      
 python:
   - "3.6"
+before_install:
+  - wget https://github.com/samtools/samtools/releases/download/1.9/samtools-1.9.tar.bz2
+  - tar xf samtools-1.9.tar.bz2
+  - cd samtools-1.9/
+  - make
+  - sudo make install
+  - cd ../
+  - rm -rf samtools-1.9 samtools-1.9.tar.bz2
 install: python setup.py install
 script: python -m unittest discover -s tests -p "*.py"
