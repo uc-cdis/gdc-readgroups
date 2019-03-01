@@ -57,8 +57,8 @@ def get_platform(readgroup_dict, logger):
     elif rgpl in ('capillary', 'helicos', 'ont'): #in the SAM specification
         platform = 'Other'
     else:
-        logger.error('The read group {0} has an unrecognized PL (platform) value '
-                     'of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
+        logger.error('The read group {0} has an unrecognized PL (platform) value'
+                     ' of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PL']))
         logger.error('Accepted values include:\n'
                      + '\t Illumina\n'
                      + '\t SOLiD\n'
@@ -115,8 +115,8 @@ def get_platform_model(readgroup_dict, logger):
     elif 'pacbio' in rgpm:
         platform_model = 'PacBio RS'
     else:
-        logger.error('The read group {0} has an unrecognized PM (platform model) '
-                     'value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PM']))
+        logger.error('The read group {0} has an unrecognized PM (platform model)'
+                     ' value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['PM']))
         logger.error('Accepted values include:\n'
                      + '\t 454 GS FLX Titanium\n'
                      + '\t AB SOLiD 2\n'
@@ -146,8 +146,8 @@ def get_datetime(readgroup_dict, logger):
         rgdt = parser.parse(readgroup_dict['DT'])
     except (ValueError, TypeError) as err:
         logger.error('e: {}'.format(err))
-        logger.error('The read group {0} has an unrecognized DT (datetime) '
-                     'value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['DT']))
+        logger.error('The read group {0} has an unrecognized DT (datetime)'
+                     ' value of: {1}'.format(readgroup_dict['ID'], readgroup_dict['DT']))
         raise InvalidDatetimeError
     return rgdt.isoformat()
 
@@ -201,7 +201,7 @@ def get_readgroup_dict_list(bam_readgroup_dict_list, logger):
             if rgp.get('BC') and pu_dict and pu_dict.get('MB'):
                 if rgp['BC'] != pu_dict['MB']:
                     logger.info('In Read Group {0}, the BC tag ({1}) does not match the third'
-                                'dotted part of the PU tag ({2})'.format(rgp.get('ID'),
+                                ' dotted part of the PU tag ({2})'.format(rgp.get('ID'),
                                                                          rgp['BC'],
                                                                          pu_dict['MB']))
         out_readgroup_dict_list.append(readgroup_meta)
