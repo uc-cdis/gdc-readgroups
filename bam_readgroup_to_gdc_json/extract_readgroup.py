@@ -156,7 +156,6 @@ def harmonize_readgroup(readgroup_dict, logger):
 def get_readgroup_dict_list(bam_readgroup_dict_list, logger):
     out_readgroup_dict_list = list()
     for bam_readgroup_dict in bam_readgroup_dict_list:
-        # logger.debug('bam_readgroup_dict: {}'.format(bam_readgroup_dict))
         rg = harmonize_readgroup(bam_readgroup_dict, logger)
         readgroup_meta = dict()
         readgroup_meta['aliquots'] = dict()
@@ -178,7 +177,6 @@ def get_readgroup_dict_list(bam_readgroup_dict_list, logger):
 
         # possible use
         barcode_sequence = rg.get('BC', None) # CHECK_MATCH with multiplex_barcode, if present, below
-        description = rg.get('DS', None) # experiment?
 
         predicted_median_insert_size = rg.get('PI', None)
         readgroup_meta['instrument_model'] = rg.get('PM', 'OPTIONAL<enumeration>')
