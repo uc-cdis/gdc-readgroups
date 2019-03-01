@@ -14,13 +14,6 @@ setup(name = 'bam_readgroup_to_gdc_json',
           'pysam==0.15.2',
           'python-dateutil==2.8.0'
       ],
-      classifiers = [
-          'Development Status :: 4 - Beta',
-          'Intended Audience :: Developers',
-          'License :: OSI Approved :: Apache Software License',
-          'Programming Language :: Python',
-          'Programming Language :: Python :: 3',
-      ],
       entry_points={
           'console_scripts': ['bam_readgroup_to_gdc_json=bam_readgroup_to_gdc_json.__main__:main']
       }
