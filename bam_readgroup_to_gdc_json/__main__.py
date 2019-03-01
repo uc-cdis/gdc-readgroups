@@ -21,8 +21,7 @@ def setup_logging(args):
         level=args.level,
         filemode='w',
         format='%(asctime)s %(levelname)s %(message)s',
-        datefmt='%Y-%m-%d_%H:%M:%S_%Z',
-    )
+        datefmt='%Y-%m-%d_%H:%M:%S_%Z')
     logger = logging.getLogger(__name__)
     return logger
 
@@ -31,19 +30,16 @@ def main():
 
     # Logging flags.
     parser.add_argument('-d', '--debug',
-        action = 'store_const',
-        const = logging.DEBUG,
-        dest = 'level',
-        help = 'Enable debug logging.',
-    )
-    parser.set_defaults(level = logging.INFO)
+                        action='store_const',
+                        const=logging.DEBUG,
+                        dest='level',
+                        help='Enable debug logging.')
+    parser.set_defaults(level=logging.INFO)
 
     # Required flags.
     parser.add_argument('-b', '--bam_path',
-                        required = True,
-                        help = 'BAM file.'
-    )
-    
+                        required=True,
+                        help='BAM file.')
 
     args = parser.parse_args()
     bam_path = args.bam_path
