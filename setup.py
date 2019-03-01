@@ -15,7 +15,7 @@ setup(name = 'bam_readgroup_to_gdc_json',
           'python-dateutil==2.8.0'
       ],
       classifiers = [
-          'Development Status :: 3 - Beta',
+          'Development Status :: 4 - Beta',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: Apache Software License',
           'Programming Language :: Python',
