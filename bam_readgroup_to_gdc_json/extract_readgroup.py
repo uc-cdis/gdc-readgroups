@@ -6,8 +6,14 @@ import re
 from dateutil import parser
 import pysam
 
-from bam_readgroup_to_gdc_json.exceptions import NoReadGroupError, InvalidPlatformError, \
-    InvalidPlatformModelError, MissingReadgroupIdError, InvalidDatetimeError, NotABamError
+from bam_readgroup_to_gdc_json.exceptions import (
+    NoReadGroupError,
+    InvalidPlatformError,
+    InvalidPlatformModelError,
+    MissingReadgroupIdError,
+    InvalidDatetimeError,
+    NotABamError
+)
 
 def resolve_platform_unit(platform_unit):
     if not platform_unit:
@@ -202,8 +208,8 @@ def get_readgroup_dict_list(bam_readgroup_dict_list, logger):
                 if rgp['BC'] != pu_dict['MB']:
                     logger.info('In Read Group {0}, the BC tag ({1}) does not match the third'
                                 ' dotted part of the PU tag ({2})'.format(rgp.get('ID'),
-                                                                         rgp['BC'],
-                                                                         pu_dict['MB']))
+                                                                          rgp['BC'],
+                                                                          pu_dict['MB']))
         out_readgroup_dict_list.append(readgroup_meta)
     return out_readgroup_dict_list
 
