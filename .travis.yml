@@ -1,4 +1,9 @@
+dist: cosmic
 language: python
+addons:
+  apt:
+    packages:
+    - samtools
 python:
   - "3.6"
 install: python setup.py install
