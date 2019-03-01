@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 setup(name = 'bam_readgroup_to_gdc_json',
       author = 'Jeremiah H. Savage',
       author_email = 'jeremiahsavage@gmail.com',
-      version = 0.11,
+      version = 0.12,
       description = 'From a BAM, convert each readgroup to a json object.',
       url = 'https://github.com/NCI-GDC/bam_readgroup_to_gdc_json/',
       license = 'Apache 2.0',
@@ -15,7 +15,7 @@ setup(name = 'bam_readgroup_to_gdc_json',
           'python-dateutil==2.8.0'
       ],
       classifiers = [
-          'Development Status :: 3 - Alpha',
+          'Development Status :: 3 - Beta',
           'Intended Audience :: Developers',
           'License :: OSI Approved :: Apache Software License',
           'Programming Language :: Python',
