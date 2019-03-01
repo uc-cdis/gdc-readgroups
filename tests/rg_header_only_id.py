@@ -30,7 +30,7 @@ class TestOnlyId(unittest.TestCase):
 
     def tearDown(self):
         os.remove(self.bam)
-        # os.remove(self.testjson)
+        os.remove(self.testjson)
 
     def test(self):
         self.testjson = extract_readgroup.extract_readgroup_json(self.bam, self.logger)
