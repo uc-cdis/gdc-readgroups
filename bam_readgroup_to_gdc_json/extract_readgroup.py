@@ -1,7 +1,6 @@
 import json
 import os
 import re
-import sys
 
 from dateutil import parser
 import pysam
