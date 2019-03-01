@@ -1,8 +1,9 @@
-dist: cosmic
+dist: xenial
 language: python
 addons:
   apt:
     packages:
+      - python3-pip
       - samtools
 python:
   - "3.6"
