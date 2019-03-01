@@ -24,6 +24,11 @@ If you would like to install the package only for a local user, run
 pip install bam_readgroup_to_gdc_json --user
 ```
 
+The command to run the pip installed package is
+```
+bam_readgroup_to_gdc_json --bam_path <your bam file>
+```
+
 ### docker image
 The GDC supplies a prebuilt Docker Image, with all prerequisite packages installed. It is easiest to run the Docker Container using the supplied CWL (Common Workflow Language) CommandLineTool file.
 To install the reference CWL engine, run
