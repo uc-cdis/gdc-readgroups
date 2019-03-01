@@ -3,7 +3,7 @@ language: python
 addons:
   apt:
     packages:
-    - samtools
+      - samtools
 python:
   - "3.6"
 install: python setup.py install
