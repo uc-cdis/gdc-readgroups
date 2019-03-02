@@ -3,7 +3,6 @@
 
 This package takes a BAM as input and converts each readgroup
 to a json object needed to create a GDC Read Group node.
-
 """
 import argparse
 import logging
