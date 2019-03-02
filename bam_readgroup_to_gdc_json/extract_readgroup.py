@@ -192,7 +192,6 @@ def get_readgroup_dict_list(bam_readgroup_dict_list, logger):
         if rgp.get('ID'): readgroup_meta['read_group_name'] = rgp['ID']
         if rgp.get('CN'): readgroup_meta['sequencing_center'] = rgp['CN']
         if rgp.get('SM') and rgp.get('ID'): readgroup_meta['submitter_id'] = rgp['SM']+'_'+rgp['ID']
-
         if rgp.get('PM'): readgroup_meta['instrument_model'] = rgp['PM']
         if rgp.get('DT'): readgroup_meta['sequencing_date'] = rgp['DT']
 
