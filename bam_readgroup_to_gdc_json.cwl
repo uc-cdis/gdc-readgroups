@@ -28,7 +28,6 @@ stdout: output.log
       
 outputs:
   - id: OUTPUT
-    format: "edam:format_3464"
     type: File
     outputBinding:
       glob: "*.json"
