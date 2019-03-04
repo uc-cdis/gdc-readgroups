@@ -11,7 +11,9 @@ Other fields are optional, and are marked `OPTIONAL<type>`. If these fields coul
 
 #### Note
 
-The tool will only run on complete BAM files. If the BAM is truncated, the error
+The tool will only run on complete BAM files - files which contain the suffix `.bam`.
+
+If the BAM is truncated, the error
 ```
 OSError: no BGZF EOF marker; file may be truncated
 ```
