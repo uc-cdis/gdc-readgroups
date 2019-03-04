@@ -4,7 +4,11 @@ from setuptools import setup, find_packages
 
 setup(name = 'bam_readgroup_to_gdc_json',
       packages = find_packages(),
-      data_files=[('bam_readgroup_to_gdc_json', ['bam_readgroup_to_gdc_json/readgroup_template.json'])],
+      package_data={
+          "bam_readgroup_to_gdc_json": [
+              "readgroup_template.json"
+              ]
+          },
       install_requires = [
           'pysam==0.15.2',
           'python-dateutil==2.8.0'
