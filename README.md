@@ -9,6 +9,15 @@ https://docs.gdc.cancer.gov/Data_Dictionary/viewer/#?view=table-definition-view&
 
 Other fields are optional, and are marked `OPTIONAL<type>`. If these fields could not be generated from the supplied BAM file, they may be filled in as appropriate or removed.
 
+#### Note
+
+The tool will only run on complete BAM files. If the BAM is truncated, the error
+```
+OSError: no BGZF EOF marker; file may be truncated
+```
+will be generated, and no json will be produced.
+
+
 ## Usage
 There are 2 ways to use `bam_readgroup_to_gdc_json`
 
@@ -28,12 +37,6 @@ The command to run the pip installed package is
 ```
 bam_readgroup_to_gdc_json --bam_path <your bam file>
 ```
-
-The tool will only run on complete BAM files. If the BAM is truncated, the error
-```
-OSError: no BGZF EOF marker; file may be truncated
-```
-will be generated, and no json will be produced.
 
 ### docker image
 The GDC supplies a prebuilt Docker Image, with all prerequisite packages installed. It is easiest to run the Docker Container using the supplied CWL (Common Workflow Language) CommandLineTool file.
