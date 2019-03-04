@@ -40,6 +40,8 @@ The command to run the pip installed package is
 bam_readgroup_to_gdc_json --bam_path <your bam file>
 ```
 
+The generated json file will be output as `<bam file basename>.json`, and any error messages will be written to stdout.
+
 ### docker image
 The GDC supplies a prebuilt Docker Image, with all prerequisite packages installed. It is easiest to run the Docker Container using the supplied CWL (Common Workflow Language) CommandLineTool file.
 To install the reference CWL engine, run
