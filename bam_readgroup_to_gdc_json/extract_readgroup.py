@@ -185,22 +185,34 @@ def get_readgroup_dict_list(bam_readgroup_dict_list, logger):
     for bam_readgroup_dict in bam_readgroup_dict_list:
         rgp = harmonize_readgroup(bam_readgroup_dict, logger)
         readgroup_meta = copy.deepcopy(rg_template)
-        if rgp.get('SM'): readgroup_meta['aliquots']['submitter_id'] = rgp['SM']
-        if rgp.get('DS'): readgroup_meta['experiment_name'] = rgp['DS']
-        if rgp.get('LB'): readgroup_meta['library_name'] = rgp['LB']
-        if rgp.get('PL'): readgroup_meta['platform'] = rgp['PL']
-        if rgp.get('ID'): readgroup_meta['read_group_name'] = rgp['ID']
-        if rgp.get('CN'): readgroup_meta['sequencing_center'] = rgp['CN']
-        if rgp.get('SM') and rgp.get('ID'): readgroup_meta['submitter_id'] = rgp['SM']+'_'+rgp['ID']
-        if rgp.get('PM'): readgroup_meta['instrument_model'] = rgp['PM']
-        if rgp.get('DT'): readgroup_meta['sequencing_date'] = rgp['DT']
+        if rgp.get('SM'):
+            readgroup_meta['aliquots']['submitter_id'] = rgp['SM']
+        if rgp.get('DS'):
+            readgroup_meta['experiment_name'] = rgp['DS']
+        if rgp.get('LB'):
+            readgroup_meta['library_name'] = rgp['LB']
+        if rgp.get('PL'):
+            readgroup_meta['platform'] = rgp['PL']
+        if rgp.get('ID'):
+            readgroup_meta['read_group_name'] = rgp['ID']
+        if rgp.get('CN'):
+            readgroup_meta['sequencing_center'] = rgp['CN']
+        if rgp.get('SM') and rgp.get('ID'):
+            readgroup_meta['submitter_id'] = rgp['SM']+'_'+rgp['ID']
+        if rgp.get('PM'):
+            readgroup_meta['instrument_model'] = rgp['PM']
+        if rgp.get('DT'):
+            readgroup_meta['sequencing_date'] = rgp['DT']
 
         platform_unit = rgp.get('PU', None)
         pu_dict = resolve_platform_unit(platform_unit)
         if pu_dict:
-            if pu_dict.get('FB'): readgroup_meta['flow_cell_barcode'] = pu_dict['FB']
-            if pu_dict.get('LN'): readgroup_meta['lane_number'] = pu_dict['LN']
-            if pu_dict.get('MB'): readgroup_meta['multiplex_barcode'] = pu_dict['MB']
+            if pu_dict.get('FB'):
+                readgroup_meta['flow_cell_barcode'] = pu_dict['FB']
+            if pu_dict.get('LN'):
+                readgroup_meta['lane_number'] = pu_dict['LN']
+            if pu_dict.get('MB'):
+                readgroup_meta['multiplex_barcode'] = pu_dict['MB']
 
             #CHECK_MATCH
             if rgp.get('BC') and pu_dict and pu_dict.get('MB'):
