@@ -10,8 +10,9 @@ import os
 
 from bam_readgroup_to_gdc_json.extract_readgroup import extract_readgroup_json
 from bam_readgroup_to_gdc_json.exceptions import NotABamError
+from bam_readgroup_to_gdc_json.generate_template import generate_template_json
 
-def validate_inputs(bam_path, logger):
+def validate_input(bam_path, logger):
     """
 
     :param bam_path:
@@ -56,14 +57,17 @@ def main():
     parser.set_defaults(level=logging.INFO)
     # Required flags.
     parser.add_argument('-b', '--bam_path',
-                        required=True,
+                        required=False,
                         help='BAM file.')
     args = parser.parse_args()
     bam_path = args.bam_path
     logger = setup_logging(args)
 
-    validate_inputs(bam_path, logger)
-    extract_readgroup_json(bam_path, logger)
+    if bam_path:
+        validate_input(bam_path, logger)
+        extract_readgroup_json(bam_path, logger)
+    else:
+        generate_template_json(logger)
     return
 
 if __name__ == '__main__':
