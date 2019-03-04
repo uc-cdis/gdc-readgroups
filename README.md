@@ -29,6 +29,12 @@ The command to run the pip installed package is
 bam_readgroup_to_gdc_json --bam_path <your bam file>
 ```
 
+The tool will only run on complete BAM files. If the BAM is truncated, the error
+```
+OSError: no BGZF EOF marker; file may be truncated
+```
+will be generated, and no json will be produced.
+
 ### docker image
 The GDC supplies a prebuilt Docker Image, with all prerequisite packages installed. It is easiest to run the Docker Container using the supplied CWL (Common Workflow Language) CommandLineTool file.
 To install the reference CWL engine, run
