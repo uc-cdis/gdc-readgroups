@@ -92,9 +92,11 @@ def main():
         output_version()
     elif bam_path:
         validate_input(bam_path, logger)
-        extract_readgroup_json(bam_path, logger)
+        json_file = extract_readgroup_json(bam_path, logger)
+        print('wrote {}'.format(json_file))
     elif template:
-        generate_template_json()
+        json_file = generate_template_json()
+        print('wrote {}'.format(json_file))
     else:
         output_help()
     return

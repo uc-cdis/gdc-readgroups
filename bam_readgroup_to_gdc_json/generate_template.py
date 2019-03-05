@@ -9,10 +9,11 @@ def get_readgroup_template():
     return data
 
 def generate_template_json():
+    json_file = 'gdc_readgroups.json'
     json_data = get_readgroup_template()
     output = list()
     output.append(json_data)
     output.append(json_data)
-    with open('gdc_readgroups.json', 'w') as f_open:
+    with open(json_file, 'w') as f_open:
         json.dump(output, f_open, indent=4)
-    return output
+    return json_file
