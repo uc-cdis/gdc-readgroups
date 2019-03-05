@@ -6,7 +6,7 @@ import re
 from dateutil import parser
 import pysam
 
-from bam_readgroup_to_gdc_json.generate_template import get_readgroup_template
+from bam_readgroup_to_gdc_json.util import get_readgroup_template, write_readgroups
 
 from bam_readgroup_to_gdc_json.exceptions import (
     NoReadGroupError,
@@ -176,7 +176,7 @@ def harmonize_readgroup(readgroup_dict, logger):
 
 def get_readgroup_dict_list(bam_readgroup_dict_list, logger):
     rg_template = get_readgroup_template()
-    out_readgroup_dict_list = list()
+    output = list()
     for bam_readgroup_dict in bam_readgroup_dict_list:
         rgp = harmonize_readgroup(bam_readgroup_dict, logger)
         readgroup_meta = copy.deepcopy(rg_template)
@@ -216,13 +216,13 @@ def get_readgroup_dict_list(bam_readgroup_dict_list, logger):
                                 ' dotted part of the PU tag ({2})'.format(rgp.get('ID'),
                                                                           rgp['BC'],
                                                                           pu_dict['MB']))
-        out_readgroup_dict_list.append(readgroup_meta)
+        output.append(readgroup_meta)
     return out_readgroup_dict_list
 
-def extract_readgroup_json(bam_path, logger):
+def extract_readgroup(bam_path, output_format, logger):
     bam_file = os.path.basename(bam_path)
-    bam_name, _ = os.path.splitext(bam_file)
-    readgroups_json_file = bam_name+'.json'
+    bam_file_base, _ = os.path.splitext(bam_file)
+    out_file = '.'.join([bam_file_base, output_format])
     with open(bam_path) as f_open:
         samfile = pysam.AlignmentFile(f_open, 'rb', check_header=True, check_sq=False)
         if not samfile.is_bam:
@@ -233,7 +233,6 @@ def extract_readgroup_json(bam_path, logger):
         if not bam_readgroup_dict_list:
             logger.error('There are no readgroups in BAM: {}'.format(samfile.filename))
             raise NoReadGroupError
-        readgroup_dict_list = get_readgroup_dict_list(bam_readgroup_dict_list, logger)
-    with open(readgroups_json_file, 'w') as f_open:
-        json.dump(readgroup_dict_list, f_open, indent=4)
-    return readgroups_json_file
+        output = get_readgroup_dict_list(bam_readgroup_dict_list, logger)
+    write_readgroups(output, out_file, logger)
+    return out_file

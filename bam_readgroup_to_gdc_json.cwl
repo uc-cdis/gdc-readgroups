@@ -22,7 +22,7 @@ inputs:
   - id: INPUT
     type: File
     inputBinding:
-      prefix: --bam_path
+      prefix: --bam-path
 
 stdout: output.log
       

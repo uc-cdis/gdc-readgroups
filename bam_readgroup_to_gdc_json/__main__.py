@@ -81,7 +81,7 @@ def main():
                             action='store_true',
                             required=False,
                             help='Output program version.')
-    parser_bam = subparsers.add_parser('bam-mode', help='using BAM Read Group header, write GDC Read Group nodes')
+    parser_bam = subparsers.add_parser('bam-mode', help='using a BAM file, write GDC Read Group nodes')
     parser_bam.add_argument('-b', '--bam-path',
                             action='store',
                             required=True,
