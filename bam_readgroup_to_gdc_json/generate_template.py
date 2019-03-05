@@ -11,8 +11,8 @@ def get_readgroup_template():
 
 def generate_template_json():
     json_file = 'gdc_readgroups.json'
-    json_data = get_readgroup_template()
-    output = [json_data, json_data]
+    data = get_readgroup_template()
+    output = [data, data]
     with open(json_file, 'w') as f_open:
         json.dump(output, f_open, indent=4)
     return json_file
