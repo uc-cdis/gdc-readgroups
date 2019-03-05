@@ -4,7 +4,9 @@ cwlVersion: v1.0
 
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/bam-readgroup-to-gdc-json:latest
+    dockerImageId: bam_readgroup_to_gdc_json
+    dockerFile:
+      $include: Dockerfile
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     coresMin: 1
@@ -37,4 +39,4 @@ outputs:
     outputBinding:
       glob: "output.log"
 
-baseCommand: [/usr/local/bin/bam_readgroup_to_gdc_json]
+baseCommand: [/usr/local/bin/bam_readgroup_to_gdc_json, bam-mode]
