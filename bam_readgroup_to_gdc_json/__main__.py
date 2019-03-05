@@ -8,9 +8,9 @@ import argparse
 import logging
 import os
 
-from bam_readgroup_to_gdc_json.extract_readgroup import extract_readgroup_json
+from bam_readgroup_to_gdc_json.extract_readgroup import extract_readgroup
 from bam_readgroup_to_gdc_json.exceptions import NotABamError
-from bam_readgroup_to_gdc_json.generate_template import generate_template_json
+from bam_readgroup_to_gdc_json.generate_template import generate_template
 
 def output_help(logger):
     import textwrap
@@ -33,10 +33,14 @@ def validate_input(bam_path, logger):
     """
 
     :param bam_path:
+    :param output_format:
+    :param template:
+    :param version:
     :param logger:
     :rtype: None
     :return:
     """
+
     bam_file = os.path.basename(bam_path)
     _, bam_ext = os.path.splitext(bam_file)
     if bam_ext != '.bam':
@@ -64,41 +68,50 @@ def main():
 
     :return:
     """
-    parser = argparse.ArgumentParser('convert readgroups to json')
+
+    parser = argparse.ArgumentParser(description='Convert BAM Read Groups to GDC Read Group Nodes')
+    subparsers = parser.add_subparsers(dest='command')
     parser.add_argument('-d', '--debug',
                         action='store_const',
                         const=logging.DEBUG,
                         dest='level',
                         help='Enable debug logging.')
     parser.set_defaults(level=logging.INFO)
-    parser.add_argument('-b', '--bam_path',
-                        required=False,
-                        help='BAM file.')
-    parser.add_argument('-t', '--template',
-                        action='store_true',
-                        required=False,
-                        help='write json template with two Read Groups')
     parser.add_argument('-v', '--version',
-                        action='store_true',
-                        required=False,
-                        help='Output program version.')
-    args = parser.parse_args()
-    bam_path = args.bam_path
-    template = args.template
-    version = args.version
-    logger = setup_logging(args)
+                            action='store_true',
+                            required=False,
+                            help='Output program version.')
+    parser_bam = subparsers.add_parser('bam-mode', help='using BAM Read Group header, write GDC Read Group nodes')
+    parser_bam.add_argument('-b', '--bam-path',
+                            action='store',
+                            required=True,
+                            help='BAM file')
+    parser_bam.add_argument('-f', '--output-format',
+                            action='store',
+                            choices=['json','tsv'],
+                            default='json',
+                            required=False)
+    parser_template = subparsers.add_parser('template-mode', help='write template with two Read Groups')
+    parser_template.add_argument('-f', '--output-format',
+                            action='store',
+                            choices=['json','tsv'],
+                            default='json',
+                            required=False)
 
-    if version:
+    args = parser.parse_args()
+    logger = setup_logging(args)
+    if args.command:
+        if args.command == 'bam-mode':
+            validate_input(args.bam_path, logger)
+            out_file = extract_readgroup(args.bam_path, args.output_format, logger)
+            logger.info('\nwrote {}'.format(out_file))
+        elif args.command == 'template-mode':
+            out_file = generate_template(args.output_format, logger)
+            logger.info('\nwrote {}'.format(out_file))
+    elif args.version:
         output_version(logger)
-    elif bam_path:
-        validate_input(bam_path, logger)
-        json_file = extract_readgroup_json(bam_path, logger)
-        logger.info('\nwrote {}'.format(json_file))
-    elif template:
-        json_file = generate_template_json()
-        logger.info('\nwrote {}'.format(json_file))
     else:
-        output_help(logger)
+        parser.print_help()
     return
 
 if __name__ == '__main__':
