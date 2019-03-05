@@ -12,6 +12,14 @@ from bam_readgroup_to_gdc_json.extract_readgroup import extract_readgroup_json
 from bam_readgroup_to_gdc_json.exceptions import NotABamError
 from bam_readgroup_to_gdc_json.generate_template import generate_template_json
 
+def output_help():
+    import textwrap
+    helpdesc = 'This package will extract the Read Group header lines from a BAM file, and convert the contained metadata to a json file with appropriate values applied for creation of a Read Group node in the Genomic Data Commons (GDC).'
+    print('\n' + textwrap.fill(helpdesc) + '\n')
+    print('Usage')
+    print('\tbam_readgroup_to_gdc_json [--bam_path <file.bam> | --template | --version]')
+    return
+
 def output_version():
     import inspect
     import pkg_resources
@@ -66,12 +74,17 @@ def main():
     parser.add_argument('-b', '--bam_path',
                         required=False,
                         help='BAM file.')
+    parser.add_argument('-t', '--template',
+                        action='store_true',
+                        required=False,
+                        help='write json template with two Read Groups')
     parser.add_argument('-v', '--version',
                         action='store_true',
                         required=False,
                         help='Output program version.')
     args = parser.parse_args()
     bam_path = args.bam_path
+    template = args.template
     version = args.version
     logger = setup_logging(args)
 
@@ -80,8 +93,10 @@ def main():
     elif bam_path:
         validate_input(bam_path, logger)
         extract_readgroup_json(bam_path, logger)
-    else:
+    elif template:
         generate_template_json()
+    else:
+        output_help()
     return
 
 if __name__ == '__main__':
