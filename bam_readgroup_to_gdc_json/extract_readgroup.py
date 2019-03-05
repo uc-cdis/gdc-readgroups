@@ -86,37 +86,37 @@ def get_platform_model(readgroup_dict, logger):
             .replace('_', '')
             .replace('.', '')
             .replace(',', ''))
-    if '454' in rgpm  and any(x in rgpm  for x in ('gs', 'flx', 'titanium')):
+    if '454' in rgpm  and any(x in rgpm for x in ('gs', 'flx', 'titanium')):
         platform_model = '454 GS FLX Titanium'
-    elif all(x in rgpm  for x in ('solid', '2')):
+    elif all(x in rgpm for x in ('solid', '2')):
         platform_model = 'AB SOLiD 2'
-    elif all(x in rgpm  for x in ('solid', '3')):
+    elif all(x in rgpm for x in ('solid', '3')):
         platform_model = 'AB SOLiD 3'
-    elif all(x in rgpm  for x in ('solid', '4')):
+    elif all(x in rgpm for x in ('solid', '4')):
         platform_model = 'AB SOLiD 4'
-    elif all(x in rgpm  for x in ('complete', 'genomics')):
+    elif all(x in rgpm for x in ('complete', 'genomics')):
         platform_model = 'Complete Genomics'
-    elif (all(x in rgpm  for x in ('illumina', 'hiseq', 'x')) and
-          any(x in rgpm  for x in ('10', 'ten'))):
+    elif (all(x in rgpm for x in ('illumina', 'hiseq', 'x')) and
+          any(x in rgpm for x in ('10', 'ten'))):
         platform_model = 'Illumina HiSeq X Ten'
-    elif (all(x in rgpm  for x in ('illumina', 'hiseq', 'x')) and
-          any(x in rgpm  for x in ('5', 'five'))):
+    elif (all(x in rgpm for x in ('illumina', 'hiseq', 'x')) and
+          any(x in rgpm for x in ('5', 'five'))):
         platform_model = 'Illumina HiSeq X Five'
-    elif all(x in rgpm  for x in ('illumina', 'iix')):
+    elif all(x in rgpm for x in ('illumina', 'iix')):
         platform_model = 'Illumina Genome Analyzer IIx'
-    elif all(x in rgpm  for x in ('illumina', 'ii')):
+    elif all(x in rgpm for x in ('illumina', 'ii')):
         platform_model = 'Illumina Genome Analyzer II'
-    elif all(x in rgpm  for x in ('illumina', '2000')):
+    elif all(x in rgpm for x in ('illumina', '2000')):
         platform_model = 'Illumina HiSeq 2000'
-    elif all(x in rgpm  for x in ('illumina', '2500')):
+    elif all(x in rgpm for x in ('illumina', '2500')):
         platform_model = 'Illumina HiSeq 2500'
-    elif all(x in rgpm  for x in ('illumina', '4000')):
+    elif all(x in rgpm for x in ('illumina', '4000')):
         platform_model = 'Illumina HiSeq 4000'
-    elif all(x in rgpm  for x in ('illumina', 'miseq')):
+    elif all(x in rgpm for x in ('illumina', 'miseq')):
         platform_model = 'Illumina MiSeq'
-    elif all(x in rgpm  for x in ('ion', 'torrent', 'pgm')):
+    elif all(x in rgpm for x in ('ion', 'torrent', 'pgm')):
         platform_model = 'Ion Torrent PGM'
-    elif all(x in rgpm  for x in ('ion', 'torrent', 'proton')):
+    elif all(x in rgpm for x in ('ion', 'torrent', 'proton')):
         platform_model = 'Ion Torrent Proton'
     elif 'pacbio' in rgpm:
         platform_model = 'PacBio RS'
