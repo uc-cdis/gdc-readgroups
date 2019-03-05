@@ -12,6 +12,15 @@ from bam_readgroup_to_gdc_json.extract_readgroup import extract_readgroup_json
 from bam_readgroup_to_gdc_json.exceptions import NotABamError
 from bam_readgroup_to_gdc_json.generate_template import generate_template_json
 
+def output_version():
+    import inspect
+    import pkg_resources
+    s = inspect.stack()
+    package = inspect.getmodule(s[1][0]).__name__.split('.')[0]
+    version = pkg_resources.require(package)[0].version
+    print( package + ' ' + version)
+    return
+
 def validate_input(bam_path, logger):
     """
 
@@ -59,10 +68,17 @@ def main():
     parser.add_argument('-b', '--bam_path',
                         required=False,
                         help='BAM file.')
+    parser.add_argument('-v', '--version',
+                        action='store_true',
+                        required=False,
+                        help='Output program version.')
     args = parser.parse_args()
     bam_path = args.bam_path
+    version = args.version
     logger = setup_logging(args)
 
+    if version:
+        output_version()
     if bam_path:
         validate_input(bam_path, logger)
         extract_readgroup_json(bam_path, logger)
