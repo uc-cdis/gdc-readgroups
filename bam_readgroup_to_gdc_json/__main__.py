@@ -12,14 +12,6 @@ from bam_readgroup_to_gdc_json.extract_readgroup import extract_readgroup
 from bam_readgroup_to_gdc_json.exceptions import NotABamError
 from bam_readgroup_to_gdc_json.generate_template import generate_template
 
-def output_help(logger):
-    import textwrap
-    helpdesc = 'This package will extract the Read Group header lines from a BAM file, and convert the contained metadata to a json file with appropriate values applied for creation of a Read Group node in the Genomic Data Commons (GDC).'
-    logger.info('\n' + textwrap.fill(helpdesc) + '\n\n' \
-                'Usage\n\n' +
-                '\tbam_readgroup_to_gdc_json [--bam_path <file.bam> | --template | --version]')
-    return
-
 def output_version(logger):
     import inspect
     import pkg_resources
