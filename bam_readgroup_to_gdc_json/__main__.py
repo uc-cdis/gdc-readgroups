@@ -81,7 +81,7 @@ def main():
         validate_input(bam_path, logger)
         extract_readgroup_json(bam_path, logger)
     else:
-        generate_template_json(logger)
+        generate_template_json()
     return
 
 if __name__ == '__main__':

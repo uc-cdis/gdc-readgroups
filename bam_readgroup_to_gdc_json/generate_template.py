@@ -8,7 +8,7 @@ def get_readgroup_template():
         data = json.load(f_open)
     return data
 
-def generate_template_json(logger):
+def generate_template_json():
     json_data = get_readgroup_template()
     output = list()
     output.append(json_data)
