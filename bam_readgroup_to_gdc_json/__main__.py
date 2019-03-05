@@ -18,7 +18,7 @@ def output_version():
     s = inspect.stack()
     package = inspect.getmodule(s[1][0]).__name__.split('.')[0]
     version = pkg_resources.require(package)[0].version
-    print( package + ' ' + version)
+    print(package + ' ' + version)
     return
 
 def validate_input(bam_path, logger):
