@@ -64,7 +64,6 @@ def main():
                         dest='level',
                         help='Enable debug logging.')
     parser.set_defaults(level=logging.INFO)
-    # Required flags.
     parser.add_argument('-b', '--bam_path',
                         required=False,
                         help='BAM file.')
