@@ -29,7 +29,7 @@ class TestNoRgSeqReads(unittest.TestCase):
 
     def test(self):
         try:
-            self.testjson = extract_readgroup.extract_readgroup_json(self.bam, self.logger)
+            self.testjson = extract_readgroup.extract_readgroup(self.bam, 'json', self.logger)
         except NoReadGroupError:
             pass
         else:

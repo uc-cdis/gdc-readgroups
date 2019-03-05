@@ -33,7 +33,7 @@ class TestAllRgTags(unittest.TestCase):
         os.remove(self.testjson)
 
     def test(self):
-        self.testjson = extract_readgroup.extract_readgroup_json(self.bam, self.logger)
+        self.testjson = extract_readgroup.extract_readgroup(self.bam, 'json', self.logger)
         with open(self.testjson, 'r') as f:
             testdata = json.load(f)
         self.assertEqual(self.expecteddata, testdata)

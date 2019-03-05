@@ -217,7 +217,7 @@ def get_readgroup_dict_list(bam_readgroup_dict_list, logger):
                                                                           rgp['BC'],
                                                                           pu_dict['MB']))
         output.append(readgroup_meta)
-    return out_readgroup_dict_list
+    return output
 
 def extract_readgroup(bam_path, output_format, logger):
     bam_file = os.path.basename(bam_path)

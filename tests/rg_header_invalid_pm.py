@@ -29,13 +29,12 @@ class TestInvalidPm(unittest.TestCase):
 
     def test(self):
         try:
-            self.testjson = extract_readgroup.extract_readgroup_json(self.bam, self.logger)
+            self.testjson = extract_readgroup.extract_readgroup(self.bam, 'json', self.logger)
         except InvalidPlatformModelError:
             pass
         else:
             self.logger.error('Input File\n\t{}\ndid not raise `InvalidPlatformModelError`'.format(self.bam))
             raise RuntimeError
-
 
 if __name__ == "__main__":
     unittest.main()
