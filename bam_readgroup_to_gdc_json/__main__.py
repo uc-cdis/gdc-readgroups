@@ -79,7 +79,7 @@ def main():
 
     if version:
         output_version()
-    if bam_path:
+    elif bam_path:
         validate_input(bam_path, logger)
         extract_readgroup_json(bam_path, logger)
     else:
