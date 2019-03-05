@@ -43,7 +43,6 @@ def get_tsv_values(data, logger):
     return row
 
 def write_readgroups(output, out_file, logger):
-    print('out_file: {}'.format(out_file))
     output_format = out_file.split('.')[-1]
     if output_format == 'json':
         with open(out_file, 'w') as f_open:
