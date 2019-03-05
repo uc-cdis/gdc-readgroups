@@ -20,7 +20,7 @@ def output_help(logger):
                 '\tbam_readgroup_to_gdc_json [--bam_path <file.bam> | --template | --version]')
     return
 
-def output_version():
+def output_version(logger):
     import inspect
     import pkg_resources
     s = inspect.stack()
@@ -89,7 +89,7 @@ def main():
     logger = setup_logging(args)
 
     if version:
-        output_version()
+        output_version(logger)
     elif bam_path:
         validate_input(bam_path, logger)
         json_file = extract_readgroup_json(bam_path, logger)
