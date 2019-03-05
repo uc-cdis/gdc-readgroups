@@ -26,7 +26,7 @@ def output_version(logger):
     s = inspect.stack()
     package = inspect.getmodule(s[1][0]).__name__.split('.')[0]
     version = pkg_resources.require(package)[0].version
-    logger.info(package + ' ' + version)
+    logger.info('\n' + package + ' ' + version)
     return
 
 def validate_input(bam_path, logger):
@@ -93,10 +93,10 @@ def main():
     elif bam_path:
         validate_input(bam_path, logger)
         json_file = extract_readgroup_json(bam_path, logger)
-        logger.info('wrote {}'.format(json_file))
+        logger.info('\nwrote {}'.format(json_file))
     elif template:
         json_file = generate_template_json()
-        logger.info('wrote {}'.format(json_file))
+        logger.info('\nwrote {}'.format(json_file))
     else:
         output_help(logger)
     return
