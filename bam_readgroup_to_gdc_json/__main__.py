@@ -12,12 +12,12 @@ from bam_readgroup_to_gdc_json.extract_readgroup import extract_readgroup_json
 from bam_readgroup_to_gdc_json.exceptions import NotABamError
 from bam_readgroup_to_gdc_json.generate_template import generate_template_json
 
-def output_help():
+def output_help(logger):
     import textwrap
     helpdesc = 'This package will extract the Read Group header lines from a BAM file, and convert the contained metadata to a json file with appropriate values applied for creation of a Read Group node in the Genomic Data Commons (GDC).'
-    print('\n' + textwrap.fill(helpdesc) + '\n\n' \
-          'Usage\n\n' +
-          '\tbam_readgroup_to_gdc_json [--bam_path <file.bam> | --template | --version]')
+    logger.info('\n' + textwrap.fill(helpdesc) + '\n\n' \
+                'Usage\n\n' +
+                '\tbam_readgroup_to_gdc_json [--bam_path <file.bam> | --template | --version]')
     return
 
 def output_version():
@@ -26,7 +26,7 @@ def output_version():
     s = inspect.stack()
     package = inspect.getmodule(s[1][0]).__name__.split('.')[0]
     version = pkg_resources.require(package)[0].version
-    print(package + ' ' + version)
+    logger.info(package + ' ' + version)
     return
 
 def validate_input(bam_path, logger):
@@ -93,12 +93,12 @@ def main():
     elif bam_path:
         validate_input(bam_path, logger)
         json_file = extract_readgroup_json(bam_path, logger)
-        print('wrote {}'.format(json_file))
+        logger.info('wrote {}'.format(json_file))
     elif template:
         json_file = generate_template_json()
-        print('wrote {}'.format(json_file))
+        logger.info('wrote {}'.format(json_file))
     else:
-        output_help()
+        output_help(logger)
     return
 
 if __name__ == '__main__':
