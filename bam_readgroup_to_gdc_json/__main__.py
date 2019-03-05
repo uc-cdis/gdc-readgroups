@@ -57,7 +57,6 @@ def main():
     :return:
     """
     parser = argparse.ArgumentParser('convert readgroups to json')
-    # Logging flags.
     parser.add_argument('-d', '--debug',
                         action='store_const',
                         const=logging.DEBUG,
