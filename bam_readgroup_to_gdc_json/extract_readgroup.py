@@ -6,6 +6,8 @@ import re
 from dateutil import parser
 import pysam
 
+from bam_readgroup_to_gdc_json.generate_template import get_readgroup_template
+
 from bam_readgroup_to_gdc_json.exceptions import (
     NoReadGroupError,
     InvalidPlatformError,
@@ -171,13 +173,6 @@ def harmonize_readgroup(readgroup_dict, logger):
     if rgdt:
         readgroup_dict['DT'] = rgdt
     return readgroup_dict
-
-def get_readgroup_template():
-    cwd = os.path.dirname(os.path.realpath(__file__))
-    json_path = os.path.join(cwd, 'readgroup_template.json')
-    with open(json_path, 'r') as f_open:
-        data = json.load(f_open)
-    return data
 
 def get_readgroup_dict_list(bam_readgroup_dict_list, logger):
     rg_template = get_readgroup_template()
