@@ -4,7 +4,7 @@
 [![Build Status][travis_img]][travis]
 <a href='https://coveralls.io/github/NCI-GDC/gdc-readgroups?branch=master'>
 <img src='https://coveralls.io/repos/github/NCI-GDC/gdc-readgroups/badge.svg?branch=master' alt='Coverage Status' /></a>
-[![PyPI version](https://badge.fury.io/py/mdv.svg)](https://badge.fury.io/py/gdc-readgroups)
+[![PyPI version](https://badge.fury.io/py/gdc-readgroups.svg)](https://badge.fury.io/py/gdc-readgroups)
 <a href="https://github.com/NCI-GDC/gdc-readgroups"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
 
 
