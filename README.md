@@ -66,7 +66,7 @@ The above command will only build the Docker Image if it does not exist on the s
 
 #### bam-mode
 
-In `bam-mode`, and path to a BAM file must be supplied as input. By default, `bam-mode` will output a json file, but optionally may output a tsv file.
+In `bam-mode`, a path to a BAM file must be supplied as input. By default, `bam-mode` will output a json file, but optionally may output a tsv file.
 
 The command to run the pip installed package is
 ```
