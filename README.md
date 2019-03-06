@@ -51,10 +51,12 @@ In this case the cwl tool will expect a BAM input, and produce a json output. To
     sudo pip install cwltool
     ```
 to install for all users, or
+
     ```
     pip install cwltool --user
     ```
 to install only for the current non-root user. Then to build Docker Image and run the Container, run
+
     ```
     cwltool gdc-readgroups.cwl --INPUT <your bam file>
     ```
