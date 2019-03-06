@@ -27,11 +27,13 @@ There are 2 ways to install `gdc-readgroups`
 `gdc-readgroups` may be used as a `pip` installed python package.
 
     If you would like to install the package as root, for all users, run
+
     ```
     sudo pip install gdc-readgroups
     ```
+
     If you would like to install the package only for a local user, run
-    
+
     ```
     pip install gdc-readgroups --user
     ```
