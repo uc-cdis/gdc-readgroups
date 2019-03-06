@@ -39,17 +39,17 @@ pip install gdc-readgroups --user
 The github repository for this package contains a Dockerfile, which may be used to build an image containing the package and all prerequisites. There are two ways to build the image.
 
 1. Using `docker` directly.
-```
-git clone https://github.com/NCI-GDC/gdc-readgroups.git
-cd gdc-readgroups
-docker build -t gdc-readgroups .
-```
+    ```
+    git clone https://github.com/NCI-GDC/gdc-readgroups.git
+    cd gdc-readgroups
+    docker build -t gdc-readgroups .
+    ```
 
 1. Using `cwltool` to build and image, and then run it, in one command.
 In this case the cwl tool will expect a BAM input, and produce a json output. To install the reference CWL engine, run
-```
-sudo pip install cwltool
-```
+    ```
+    sudo pip install cwltool
+    ```
 to install for all users, or
 ```
 pip install cwltool --user
