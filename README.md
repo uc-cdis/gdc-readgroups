@@ -17,7 +17,7 @@ The tool will only run on complete BAM files - files which contain the suffix `.
 
 If the BAM is truncated, the error
 
-```bash
+```
     OSError: no BGZF EOF marker; file may be truncated
 ```
 
@@ -30,7 +30,7 @@ There are 2 ways to install `gdc-readgroups`
 #### pip install from pypi
 `gdc-readgroups` may be used as a `pip` installed python package.
 
-    If you would like to install the package as root, for all users, run
+If you would like to install the package as root, for all users, run
     
 ```bash
     sudo pip install gdc-readgroups
@@ -46,7 +46,7 @@ pip install gdc-readgroups --user
 The github repository for this package contains a Dockerfile, which may be used to build an image containing the package and all prerequisites. There are two ways to build the image.
 
 1. Using `docker` directly.
-    ```
+    ```bash
     git clone https://github.com/NCI-GDC/gdc-readgroups.git
     cd gdc-readgroups
     docker build -t gdc-readgroups .
@@ -55,12 +55,12 @@ The github repository for this package contains a Dockerfile, which may be used 
 1. Using `cwltool` to build and image, and then run it, in one command.
     
     In this case the cwl tool will expect a BAM input, and produce a json output. To install the reference CWL engine, run
-    ```
+    ```bash
     sudo pip install cwltool
     ```
     to install for all users, or
 
-    ```
+    ```bash
     pip install cwltool --user
     ```
     to install only for the current non-root user. Then to build Docker Image and run the Container, run
@@ -97,13 +97,13 @@ The generated tsv filename will be placed in your current working directory, and
 In `template-mode`, no input is supplied, and two empty records are output, either in json or tsv format.
 
 To generate a json template, run
-    ```
+    ```bash
     gdc-readgroups template-mode
     ```
 The output will be placed in the current working directory and have a filename of `gdc_readgroups.json`
 
 To generate a tsv template, run
-    ```
+    ```bash
     gdc-readgroups template-mode --output-format tsv
     ```
 The output will be placed in the current working directory and have a filename of `gdc_readgroups.tsv`
