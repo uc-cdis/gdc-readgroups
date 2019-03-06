@@ -14,6 +14,6 @@ setup(name = 'gdc_readgroups',
           'python-dateutil==2.8.0'
       ],
       entry_points={
-          'console_scripts': ['gdc_readgroups=gdc_readgroups.__main__:main']
+          'console_scripts': ['gdc-readgroups=gdc_readgroups.__main__:main']
       }
 )

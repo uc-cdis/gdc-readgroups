@@ -8,5 +8,5 @@ RUN apt-get update \
        python3-pip \
        samtools \
     && apt-get clean \
-    && pip3 install gdc_readgroups==0.1 \
+    && pip3 install gdc-readgroups==0.1 \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache
