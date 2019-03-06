@@ -4,7 +4,7 @@ cwlVersion: v1.0
 
 requirements:
   - class: DockerRequirement
-    dockerImageId: bam_readgroup_to_gdc_json
+    dockerImageId: gdc-readgroups
     dockerFile:
       $include: Dockerfile
   - class: InlineJavascriptRequirement
@@ -39,4 +39,4 @@ outputs:
     outputBinding:
       glob: "output.log"
 
-baseCommand: [/usr/local/bin/bam_readgroup_to_gdc_json, bam-mode]
+baseCommand: [/usr/local/bin/gdc-readgroups, bam-mode]
