@@ -89,7 +89,7 @@ To output a tsv file, run
 gdc-readgroups bam-mode --bam_path <your bam file> --output-format tsv
 ```
 
-The generated tsv filename will be placed in your current working directory, and be of the form `<bam basename>.tsv`
+The generated tsv file will be placed in your current working directory, and be of the form `<bam basename>.tsv`
 
 
 #### template-mode
