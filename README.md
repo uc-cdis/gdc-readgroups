@@ -52,7 +52,7 @@ The github repository for this package contains a Dockerfile, which may be used 
     docker build -t gdc-readgroups .
     ```
 
-1. Using `cwltool` to build and image, and then run it, in one command.
+1. Using `cwltool` to build an image, and then run it, in one command.
     
     In this case the cwl tool will expect a BAM input, and produce a json output. To install the reference CWL engine, run
     ```bash
