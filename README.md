@@ -73,7 +73,7 @@ The github repository for this package contains a Dockerfile, which may be used 
 
 In `bam-mode`, a path to a BAM file must be supplied as input. By default, `bam-mode` will output a json file, but optionally may output a tsv file.
 
-The command to run the pip installed package is
+The command to run the `pip` installed package is
 
 ```bash
 gdc-readgroups bam-mode --bam_path <your bam file>
