@@ -1,9 +1,9 @@
-# bam_readgroup_to_gdc_json
+# gdc-readgroups
 
 ## Purpose
-This package will extract the Read Group header lines from a BAM file, and convert the contained metadata to a json file with appropriate values applied for creation of a Read Group node in the Genomic Data Commons (GDC).
+This package will extract the Read Group header lines from a BAM file, and convert the contained metadata to a json or tsv file with appropriate values applied for creation of a Read Group node in the Genomic Data Commons (GDC).
 
-The generated json file may contain some fields marked `REQUIRED<type>`. This indicates these fields could not be generated from the supplied BAM file, and the user must apply their own desired values to the generated json. The `<type>` must be as indicated in the generated json file. For details, see the column `Acceptable Types or Values` at
+The generated file may contain some fields marked `REQUIRED<type>`. This indicates these fields could not be generated from the supplied BAM file, and the user must apply their own desired values to the generated json. The `<type>` must be as indicated in the generated json file. For details, see the column `Acceptable Types or Values` at
 
 https://docs.gdc.cancer.gov/Data_Dictionary/viewer/#?view=table-definition-view&id=read_group
 
@@ -20,30 +20,32 @@ OSError: no BGZF EOF marker; file may be truncated
 will be generated, and no json will be produced.
 
 
-## Usage
-There are 2 ways to use `bam_readgroup_to_gdc_json`
+## Installation
+There are 2 ways to install `gdc-readgroups`
 
-### pip install
-`bam_readgroup_to_gdc_json` may be used as a `pip` installed python package.
+#### pip install
+`gdc-readgroups` may be used as a `pip` installed python package.
 
 If you would like to install the package as root, for all users, run
 ```
-sudo pip install bam_readgroup_to_gdc_json
+sudo pip install gdc-readgroups
 ```
 If you would like to install the package only for a local user, run
 ```
-pip install bam_readgroup_to_gdc_json --user
+pip install gdc-readgroups --user
 ```
 
-The command to run the pip installed package is
+#### docker image
+The github repository for this package contains a Dockerfile, which can be used to build an image containing the package. There are two ways to build the image.
+
+1.
 ```
-bam_readgroup_to_gdc_json --bam_path <your bam file>
+git clone https://github.com/NCI-GDC/gdc-readgroups.git
+cd gdc-readgroups
+docker build -t gdc-readgroups .
 ```
 
-The generated json file will be output as `<bam file basename>.json`, and any error messages will be written to stdout.
-
-### docker image
-The GDC supplies a prebuilt Docker Image, with all prerequisite packages installed. It is easiest to run the Docker Container using the supplied CWL (Common Workflow Language) CommandLineTool file.
+1. the Docker Container using the supplied CWL (Common Workflow Language) CommandLineTool file.
 To install the reference CWL engine, run
 ```
 sudo pip install cwltool
@@ -52,8 +54,20 @@ or
 ```
 pip install cwltool --user
 ```
-Then to run the Docker Container, run
+Then to build Docker Image and run the Container, run
 ```
-cwltool bam_readgroup_to_gdc_json.cwl --INPUT <your bam file>
+cwltool gdc-readgroups.cwl --INPUT <your bam file>
 ```
+
+The above command will only build the Docker Image if it does not exist on the system.
+
+## Usage
+
+
+The command to run the pip installed package is
+```
+gdc-readgroups --bam_path <your bam file>
+```
+
+The generated json file will be output as `<bam file basename>.json`, and any error messages will be written to stdout.
 The generated json file will be output as `<bam file basename>.json`, and any error messages will be written to `output.log`.

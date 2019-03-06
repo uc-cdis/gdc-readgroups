@@ -2,10 +2,10 @@
 
 from setuptools import setup, find_packages
 
-setup(name = 'bam_readgroup_to_gdc_json',
+setup(name = 'gdc_readgroups',
       packages = find_packages(),
       package_data={
-          "bam_readgroup_to_gdc_json": [
+          "gdc_readgroups": [
               "readgroup_template.json"
               ]
           },
@@ -14,6 +14,6 @@ setup(name = 'bam_readgroup_to_gdc_json',
           'python-dateutil==2.8.0'
       ],
       entry_points={
-          'console_scripts': ['bam_readgroup_to_gdc_json=bam_readgroup_to_gdc_json.__main__:main']
+          'console_scripts': ['gdc_readgroups=gdc_readgroups.__main__:main']
       }
 )
