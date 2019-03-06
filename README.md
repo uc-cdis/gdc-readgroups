@@ -5,7 +5,7 @@
 ## Purpose
 This package will extract the Read Group header lines from a BAM file, and convert the contained metadata to a json or tsv file with appropriate values applied for creation of a Read Group node in the [NCI's Genomic Data Commons](https://gdc.cancer.gov/) (GDC). Optionally, it will take no input, and output a template which may be edited to create a submission to the GDC.
 
-The generated file may contain some fields marked `REQUIRED<type>`, which indicates these fields could not be generated from the supplied BAM file. In this case, the user must apply their own desired values to the generated json. The `<type>` must be as indicated in the generated json file. For details, see the column `Acceptable Types or Values` at the [GDC Data Dictionary Viewer](https://docs.gdc.cancer.gov/Data_Dictionary/viewer/#?view=table-definition-view&id=read_group).
+The generated file may contain some fields marked `REQUIRED<type>`, which indicates these fields could not be generated from the supplied BAM file. In this case, the user *must* apply their own desired values to the generated json. The `<type>` must be as indicated in the generated json file. For details, see the column `Acceptable Types or Values` at the [GDC Data Dictionary Viewer](https://docs.gdc.cancer.gov/Data_Dictionary/viewer/#?view=table-definition-view&id=read_group).
 
 
 
