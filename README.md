@@ -72,7 +72,7 @@ The command to run the pip installed package is
 ```
 gdc-readgroups bam-mode --bam_path <your bam file>
 ```
-The generated json filename will be placed in your current working directory, and be of the form `<bam basename>.json`.
+The generated json will be placed in the current working directory and have a filename of `<bam basename>.json`.
 Any error messages will be written to stdout.
 
 To output a tsv file, run
