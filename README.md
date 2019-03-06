@@ -16,9 +16,11 @@ Other fields are optional, and are marked `OPTIONAL<type>`. If these fields coul
 The tool will only run on complete BAM files - files which contain the suffix `.bam`.
 
 If the BAM is truncated, the error
-    ```
+
+```bash
     OSError: no BGZF EOF marker; file may be truncated
-    ```
+```
+
 will be generated, and no json will be produced.
 
 
@@ -29,16 +31,16 @@ There are 2 ways to install `gdc-readgroups`
 `gdc-readgroups` may be used as a `pip` installed python package.
 
     If you would like to install the package as root, for all users, run
-
-    ```
+    
+```bash
     sudo pip install gdc-readgroups
-    ```
+```
+    
+If you would like to install the package only for a local user, run
 
-    If you would like to install the package only for a local user, run
-
-    ```
-    pip install gdc-readgroups --user
-    ```
+```bash
+pip install gdc-readgroups --user
+```
 
 #### Build a Docker Image
 The github repository for this package contains a Dockerfile, which may be used to build an image containing the package and all prerequisites. There are two ways to build the image.
