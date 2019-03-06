@@ -47,8 +47,7 @@ The github repository for this package contains a Dockerfile, which may be used 
 
 1. Using `docker` directly.
     ```bash
-    git clone https://github.com/NCI-GDC/gdc-readgroups.git
-    cd gdc-readgroups
+    wget https://raw.githubusercontent.com/NCI-GDC/gdc-readgroups/master/Dockerfile
     docker build -t gdc-readgroups .
     ```
 
@@ -61,6 +60,8 @@ The github repository for this package contains a Dockerfile, which may be used 
     Then to build the `gdc-readgroups` Docker Image and run the Container, run
 
     ```bash
+    wget https://raw.githubusercontent.com/NCI-GDC/gdc-readgroups/master/Dockerfile
+    wget https://raw.githubusercontent.com/NCI-GDC/gdc-readgroups/master/gdc-readgroups.cwl
     cwltool gdc-readgroups.cwl --INPUT <your bam file>
     ```
     The above command will only build the Docker Image if it does not exist on the system. After the build is performed once, the image will remain on your system, and the next `cwltool` run will skip the build step.
