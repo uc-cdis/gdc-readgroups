@@ -14,9 +14,9 @@ Other fields are optional, and are marked `OPTIONAL<type>`. If these fields coul
 The tool will only run on complete BAM files - files which contain the suffix `.bam`.
 
 If the BAM is truncated, the error
-```
-OSError: no BGZF EOF marker; file may be truncated
-```
+    ```
+    OSError: no BGZF EOF marker; file may be truncated
+    ```
 will be generated, and no json will be produced.
 
 
@@ -27,13 +27,13 @@ There are 2 ways to install `gdc-readgroups`
 `gdc-readgroups` may be used as a `pip` installed python package.
 
 If you would like to install the package as root, for all users, run
-```
-sudo pip install gdc-readgroups
-```
+    ```
+    sudo pip install gdc-readgroups
+    ```
 If you would like to install the package only for a local user, run
-```
-pip install gdc-readgroups --user
-```
+    ```
+    pip install gdc-readgroups --user
+    ```
 
 #### docker image
 The github repository for this package contains a Dockerfile, which may be used to build an image containing the package and all prerequisites. There are two ways to build the image.
@@ -51,13 +51,13 @@ In this case the cwl tool will expect a BAM input, and produce a json output. To
     sudo pip install cwltool
     ```
 to install for all users, or
-```
-pip install cwltool --user
-```
+    ```
+    pip install cwltool --user
+    ```
 to install only for the current non-root user. Then to build Docker Image and run the Container, run
-```
-cwltool gdc-readgroups.cwl --INPUT <your bam file>
-```
+    ```
+    cwltool gdc-readgroups.cwl --INPUT <your bam file>
+    ```
 The above command will only build the Docker Image if it does not exist on the system. After the build is performed is performed once, the image will remain on your system, and the next run will skip the build step.
 
 ## Usage
@@ -69,16 +69,16 @@ The above command will only build the Docker Image if it does not exist on the s
 In `bam-mode`, a path to a BAM file must be supplied as input. By default, `bam-mode` will output a json file, but optionally may output a tsv file.
 
 The command to run the pip installed package is
-```
-gdc-readgroups bam-mode --bam_path <your bam file>
-```
+    ```
+    gdc-readgroups bam-mode --bam_path <your bam file>
+    ```
 The generated json will be placed in the current working directory and have a filename of `<bam basename>.json`.
 Any error messages will be written to stdout.
 
 To output a tsv file, run
-```
-gdc-readgroups bam-mode --bam_path <your bam file> --output-format tsv
-```
+    ```
+    gdc-readgroups bam-mode --bam_path <your bam file> --output-format tsv
+    ```
 The generated tsv filename will be placed in your current working directory, and be of the form `<bam basename>.tsv`
 
 
@@ -87,13 +87,13 @@ The generated tsv filename will be placed in your current working directory, and
 In `template-mode`, no input is supplied, and two empty records are output, either in json or tsv format.
 
 To generate a json template, run
-```
-gdc-readgroups template-mode
-```
+    ```
+    gdc-readgroups template-mode
+    ```
 The output will be placed in the current working directory and have a filename of `gdc_readgroups.json`
 
 To generate a tsv template, run
-```
-gdc-readgroups template-mode --output-format tsv
-```
+    ```
+    gdc-readgroups template-mode --output-format tsv
+    ```
 The output will be placed in the current working directory and have a filename of `gdc_readgroups.tsv`
