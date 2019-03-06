@@ -46,21 +46,22 @@ The github repository for this package contains a Dockerfile, which may be used 
     ```
 
 1. Using `cwltool` to build and image, and then run it, in one command.
-In this case the cwl tool will expect a BAM input, and produce a json output. To install the reference CWL engine, run
+    
+    In this case the cwl tool will expect a BAM input, and produce a json output. To install the reference CWL engine, run
     ```
     sudo pip install cwltool
     ```
-to install for all users, or
+    to install for all users, or
 
     ```
     pip install cwltool --user
     ```
-to install only for the current non-root user. Then to build Docker Image and run the Container, run
+    to install only for the current non-root user. Then to build Docker Image and run the Container, run
 
     ```
     cwltool gdc-readgroups.cwl --INPUT <your bam file>
     ```
-The above command will only build the Docker Image if it does not exist on the system. After the build is performed is performed once, the image will remain on your system, and the next run will skip the build step.
+    The above command will only build the Docker Image if it does not exist on the system. After the build is performed is performed once, the image will remain on your system, and the next run will skip the build step.
 
 ## Usage
 
