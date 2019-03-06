@@ -9,7 +9,7 @@ import pysam
 from gdc_readgroups import __main__ as main
 from gdc_readgroups import extract_readgroup
 from gdc_readgroups.exceptions import SamtoolsViewError
-from gdc_readgroups.tests import util
+from tests import util
 
 SAMFILE='rg_header_all_rg_tags_no_sq.sam'
 EXPECTEDJSON = 'expected.rg_header_all_rg_tags_no_sq.json'

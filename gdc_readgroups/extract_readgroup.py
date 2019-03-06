@@ -6,9 +6,9 @@ import re
 from dateutil import parser
 import pysam
 
-from bam_readgroups.util import get_readgroup_template, write_readgroups
+from gdc_readgroups.util import get_readgroup_template, write_readgroups
 
-from bam_readgroups.exceptions import (
+from gdc_readgroups.exceptions import (
     NoReadGroupError,
     InvalidPlatformError,
     InvalidPlatformModelError,

@@ -8,7 +8,7 @@ import pysam
 
 from gdc_readgroups import __main__ as main
 from gdc_readgroups import extract_readgroup
-from gdc_readgroups.tests import util
+from tests import util
 
 SAMFILE='rg_header_only_id.sam'
 EXPECTEDJSON = 'expected.rg_header_only_id.json'

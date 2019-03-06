@@ -8,9 +8,9 @@ import argparse
 import logging
 import os
 
-from bam_readgroups.extract_readgroup import extract_readgroup
-from bam_readgroups.exceptions import NotABamError
-from bam_readgroups.generate_template import generate_template
+from gdc_readgroups.extract_readgroup import extract_readgroup
+from gdc_readgroups.exceptions import NotABamError
+from gdc_readgroups.generate_template import generate_template
 
 def output_version(logger):
     import inspect

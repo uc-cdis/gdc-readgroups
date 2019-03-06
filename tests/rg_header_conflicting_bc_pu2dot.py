@@ -9,7 +9,7 @@ import pysam
 from gdc_readgroups import __main__ as main
 from gdc_readgroups import extract_readgroup
 from gdc_readgroups.exceptions import SamtoolsViewError
-from gdc_readgroups.tests import util
+from tests import util
 
 SAMFILE='rg_header_conflicting_bc_pu2dot.sam'
 EXPECTEDJSON = 'expected.rg_header_conflicting_bc_pu2dot.json'
