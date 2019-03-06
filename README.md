@@ -33,7 +33,7 @@ There are 2 ways to install `gdc-readgroups`
 If you would like to install the package as root, for all users, run
     
 ```bash
-    sudo pip install gdc-readgroups
+sudo pip install gdc-readgroups
 ```
     
 If you would like to install the package only for a local user, run
