@@ -1,7 +1,3 @@
-import util
-
-from bam_readgroup_to_gdc_json import extract_readgroup
-
 import argparse
 import json
 import logging
@@ -10,8 +6,10 @@ import unittest
 
 import pysam
 
-from bam_readgroup_to_gdc_json import __main__ as main
-from bam_readgroup_to_gdc_json.exceptions import SamtoolsViewError
+from gdc_readgroups import __main__ as main
+from gdc_readgroups import extract_readgroup
+from gdc_readgroups.exceptions import SamtoolsViewError
+from gdc_readgroups.tests import util
 
 SAMFILE='rg_header_conflicting_bc_pu2dot.sam'
 EXPECTEDJSON = 'expected.rg_header_conflicting_bc_pu2dot.json'

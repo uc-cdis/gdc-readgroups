@@ -1,4 +1,4 @@
-from bam_readgroup_to_gdc_json.util import get_readgroup_template, write_readgroups
+from bam_readgroups.util import get_readgroup_template, write_readgroups
 
 def generate_template(output_format, logger):
     out_file_base = 'gdc_readgroups'
