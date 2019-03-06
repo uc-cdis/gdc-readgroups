@@ -63,9 +63,9 @@ The github repository for this package contains a Dockerfile, which may be used 
     ```bash
     pip install cwltool --user
     ```
-    to install only for the current non-root user. Then to build Docker Image and run the Container, run
+    to install only for the current non-root user. Then to build the gdcDocker Image and run the Container, run
 
-    ```
+    ```bash
     cwltool gdc-readgroups.cwl --INPUT <your bam file>
     ```
     The above command will only build the Docker Image if it does not exist on the system. After the build is performed is performed once, the image will remain on your system, and the next run will skip the build step.
