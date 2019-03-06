@@ -80,7 +80,7 @@ In `bam-mode`, a path to a BAM file must be supplied as input. By default, `bam-
 
 The command to run the pip installed package is
 
-```
+```bash
 gdc-readgroups bam-mode --bam_path <your bam file>
 ```
 
@@ -89,7 +89,7 @@ Any error messages will be written to stdout.
 
 To output a tsv file, run
 
-```
+```bash
 gdc-readgroups bam-mode --bam_path <your bam file> --output-format tsv
 ```
 
