@@ -1,13 +1,6 @@
 # gdc-readgroups
 
-
-[![Build Status][travis_img]][travis]
-<a href='https://coveralls.io/github/NCI-GDC/gdc-readgroups?branch=master'>
-<img src='https://coveralls.io/repos/github/NCI-GDC/gdc-readgroups/badge.svg?branch=master' alt='Coverage Status' /></a>
 [![PyPI version](https://badge.fury.io/py/gdc-readgroups.svg)](https://badge.fury.io/py/gdc-readgroups)
-<a href="https://github.com/NCI-GDC/gdc-readgroups"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
-
-
 
 ## Purpose
 This package will extract the Read Group header lines from a BAM file, and convert the contained metadata to a json or tsv file with appropriate values applied for creation of a Read Group node in the Genomic Data Commons (GDC). Optionally, it take no input, and output a template which may be edited to create a submission to the GDC.
