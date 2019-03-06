@@ -1,9 +1,9 @@
 # gdc-readgroups
 
 ## Purpose
-This package will extract the Read Group header lines from a BAM file, and convert the contained metadata to a json or tsv file with appropriate values applied for creation of a Read Group node in the Genomic Data Commons (GDC).
+This package will extract the Read Group header lines from a BAM file, and convert the contained metadata to a json or tsv file with appropriate values applied for creation of a Read Group node in the Genomic Data Commons (GDC). Optionally, it take no input, and output a template which may be edited to create a submission to the GDC.
 
-The generated file may contain some fields marked `REQUIRED<type>`. This indicates these fields could not be generated from the supplied BAM file, and the user must apply their own desired values to the generated json. The `<type>` must be as indicated in the generated json file. For details, see the column `Acceptable Types or Values` at
+The generated file may contain some fields marked `REQUIRED<type>`, which indicates these fields could not be generated from the supplied BAM file. In this case, the user must apply their own desired values to the generated json. The `<type>` must be as indicated in the generated json file. For details, see the column `Acceptable Types or Values` at
 
 https://docs.gdc.cancer.gov/Data_Dictionary/viewer/#?view=table-definition-view&id=read_group
 
@@ -36,38 +36,64 @@ pip install gdc-readgroups --user
 ```
 
 #### docker image
-The github repository for this package contains a Dockerfile, which can be used to build an image containing the package. There are two ways to build the image.
+The github repository for this package contains a Dockerfile, which may be used to build an image containing the package and all prerequisites. There are two ways to build the image.
 
-1.
+1. Using `docker` directly.
 ```
 git clone https://github.com/NCI-GDC/gdc-readgroups.git
 cd gdc-readgroups
 docker build -t gdc-readgroups .
 ```
 
-1. the Docker Container using the supplied CWL (Common Workflow Language) CommandLineTool file.
-To install the reference CWL engine, run
+1. Using `cwltool` to build then run in one command.
+In this case the cwl tool will expect a BAM input, and produce a json output. To install the reference CWL engine, run
 ```
 sudo pip install cwltool
 ```
-or
+to install for all users, or
 ```
 pip install cwltool --user
 ```
-Then to build Docker Image and run the Container, run
+to install only for the current non-root user. Then to build Docker Image and run the Container, run
 ```
 cwltool gdc-readgroups.cwl --INPUT <your bam file>
 ```
-
-The above command will only build the Docker Image if it does not exist on the system.
+The above command will only build the Docker Image if it does not exist on the system. After the build is performed is performed once, the image will remain on your system, and the next run will skip the build step.
 
 ## Usage
 
+`gdc-readgroups` has two main modes: `bam-mode` and `template-mode`. 
+
+#### bam-mode
+
+In `bam-mode`, and path to a BAM file must be supplied as input. By default, `bam-mode` will output a json file, but optionally may output a tsv file.
 
 The command to run the pip installed package is
 ```
-gdc-readgroups --bam_path <your bam file>
+gdc-readgroups bam-mode --bam_path <your bam file>
 ```
+The generated json filename will be placed in your current working directory, and be of the form `<bam basename>.json`.
+Any error messages will be written to stdout.
 
-The generated json file will be output as `<bam file basename>.json`, and any error messages will be written to stdout.
-The generated json file will be output as `<bam file basename>.json`, and any error messages will be written to `output.log`.
+To output a tsv file, run
+```
+gdc-readgroups bam-mode --bam_path <your bam file> --output-format tsv
+```
+The generated tsv filename will be placed in your current working directory, and be of the form `<bam basename>.tsv`
+
+
+#### template-mode
+
+In `template-mode`, no input is supplied, and two empty records are output, either in json or tsv format.
+
+To generate a json template, run
+```
+gdc-readgroups template-mode
+```
+The output will be placed in the current working directory and have a filename of `gdc_readgroups.json`
+
+To generate a tsv template, run
+```
+gdc-readgroups template-mode --output-format tsv
+```
+The output will be placed in the current working directory and have a filename of `gdc_readgroups.tsv`
