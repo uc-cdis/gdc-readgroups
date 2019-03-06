@@ -79,16 +79,20 @@ The github repository for this package contains a Dockerfile, which may be used 
 In `bam-mode`, a path to a BAM file must be supplied as input. By default, `bam-mode` will output a json file, but optionally may output a tsv file.
 
 The command to run the pip installed package is
-    ```
-    gdc-readgroups bam-mode --bam_path <your bam file>
-    ```
+
+```
+gdc-readgroups bam-mode --bam_path <your bam file>
+```
+
 The generated json will be placed in the current working directory and have a filename of `<bam basename>.json`.
 Any error messages will be written to stdout.
 
 To output a tsv file, run
-    ```
-    gdc-readgroups bam-mode --bam_path <your bam file> --output-format tsv
-    ```
+
+```
+gdc-readgroups bam-mode --bam_path <your bam file> --output-format tsv
+```
+
 The generated tsv filename will be placed in your current working directory, and be of the form `<bam basename>.tsv`
 
 
@@ -97,13 +101,17 @@ The generated tsv filename will be placed in your current working directory, and
 In `template-mode`, no input is supplied, and two empty records are output, either in json or tsv format.
 
 To generate a json template, run
-    ```bash
-    gdc-readgroups template-mode
-    ```
+
+```bash
+gdc-readgroups template-mode
+```
+
 The output will be placed in the current working directory and have a filename of `gdc_readgroups.json`
 
 To generate a tsv template, run
-    ```bash
-    gdc-readgroups template-mode --output-format tsv
-    ```
+
+```bash
+gdc-readgroups template-mode --output-format tsv
+```
+
 The output will be placed in the current working directory and have a filename of `gdc_readgroups.tsv`
