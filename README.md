@@ -93,7 +93,7 @@ The generated tsv filename will be placed in your current working directory, and
 
 #### template-mode
 
-In `template-mode`, no input is supplied, and two empty records are output, either in json or tsv format.
+In `template-mode`, no input is supplied, and two empty records are output within one file, either in json or tsv format.
 
 To generate a json template, run
 
