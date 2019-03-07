@@ -17,7 +17,7 @@ def get_tsv_header(data, logger):
             subvalue_list = list(data[item].keys())
             assert len(subvalue_list) == 1
             subvalue = subvalue_list[0]
-            header.append('.'.join(item, subvalue))
+            header.append('.'.join([item, subvalue]))
         elif isinstance(data[item],str):
             header.append(item)
         else:
