@@ -23,7 +23,7 @@ def get_tsv_header(data, logger):
         elif isinstance(data[item],str):
             header.append(item)
         else:
-            logger.debug('unexpected type with item {0}, of type {1}'.format(data[item],
+            logger.error('unexpected type with item {0}, of type {1}'.format(data[item],
                                                                              type(data[item])))
             raise ValueError
     return header
@@ -41,7 +41,7 @@ def get_tsv_values(data, logger):
         elif isinstance(data[item],str):
             row.append(data[item])
         else:
-            logger.debug('unexpected type with item {0}, of type {1}'.format(data[item],
+            logger.error('unexpected type with item {0}, of type {1}'.format(data[item],
                                                                              type(data[item])))
             raise ValueError
     return row
