@@ -24,7 +24,7 @@ If the BAM is truncated, the error
 will be generated, and no json will be produced.
 
 ## Note
-`gdc-readgroups` is tested with Python3. Python2 is untested, and may not work.
+`gdc-readgroups` is tested with Python 3.6, and above. Python2 is untested, and may not work.
 
 ## Installation
 
