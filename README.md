@@ -30,7 +30,7 @@ will be generated, and no json will be produced.
 
 There are 2 ways to install `gdc-readgroups`
 
-#### pip install from pypi
+#### pip install from pypi.org
 `gdc-readgroups` may be used as a `pip` installed python package.
 
 If you would like to install the package as root, for all users, run
