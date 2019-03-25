@@ -23,10 +23,10 @@ If the BAM is truncated, the error
 
 will be generated, and no json will be produced.
 
-
-## Installation
 ## Note
 `gdc-readgroups` is tested with Python3. Python2 is untested, and may not work.
+
+## Installation
 
 There are 2 ways to install `gdc-readgroups`
 
